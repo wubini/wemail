@@ -3,7 +3,7 @@ var router = require('express').Router();
 module.exports = router;
 
 router.use('/members', require('./members'));
-router.use('/email', require("./email"));
+router.use('/emails', require("./email"));
 
 
 // Make sure this is after all of

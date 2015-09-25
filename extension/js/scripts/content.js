@@ -25,5 +25,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 document.addEventListener('triggerSave', function(e){
   console.log("content got triggerSave with", e.detail);
   var email = e.detail;
-  chrome.runtime.sendMessage({message: 'emailContent',emailContent: email});
+  console.log(email);
+  console.log("We here are ", email);
+  chrome.runtime.sendMessage({message: 'emailContent', emailContent: email});
 });

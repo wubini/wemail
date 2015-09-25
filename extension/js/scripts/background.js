@@ -11,13 +11,14 @@ chrome.runtime.onMessage.addListener(function(message, sender){
     emails.push(message.emailContent);
     console.log(emails);
   }else if(message.message === "getEmails"){
+    console.log(emails);
     chrome.runtime.sendMessage({message:"updatedEmails", emails: emails})
   }
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-  var custom = document.createElement('script');
-  custom.className+= " customScript"
-  custom.src = "js/scripts/custom.js";
-  chrome.tabs.sendMessage(tab.id,{command: 'backgroundGood', file: {node:custom}});
-});
+// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+//   var custom = document.createElement('script');
+//   custom.className+= " customScript"
+//   custom.src = "js/scripts/custom.js";
+//   chrome.tabs.sendMessage(tab.id,{command: 'backgroundGood', file: {node:custom}});
+// });
