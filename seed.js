@@ -25,7 +25,7 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Email = Promise.promisifyAll(mongoose.model("Email"));
 var faker = require('faker');
 
-var numEmails = 10000;
+var numEmails = 100;
 
 var seedUsers = function () {
     var users = [
@@ -46,7 +46,7 @@ var findLength = function(content){
   return array.length;
 };
 
-var findWord = function(content){
+var findWords = function(content){
   var array = content.split(" ");
   var words = [];
   array.forEach(function(word){
@@ -72,7 +72,7 @@ var seedEmails = function() {
     };
     email.content = faker.lorem.paragraphs();
     email.subject = faker.lorem.sentence();
-    var numOfTags = faker.random.number();
+    var numOfTags = faker.random.number() % 100;
     for(var j = 0; j < numOfTags; j++){
       var tag = faker.hacker.noun();
       email.tags.push(tag);
@@ -82,14 +82,15 @@ var seedEmails = function() {
       longitude: faker.address.longitude()
     };
     email.timestamp = faker.date.past();
-    email.length = findLength(content);
+    email.length = findLength(email.content);
     var genderSetter = faker.random.number();
     if(genderSetter > 1000) email.gender = "M";
     else email.gender = "F";
-    email.words = findWords(content);
-    emails.push(emails);
+    email.words = findWords(email.content);
+    emails.push(email);
+    console.log(numEmails - i)
   }
-  console.log(emails);
+  console.log(emails)
   return Email.createAsync(emails);
 };
 
