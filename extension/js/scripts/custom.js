@@ -1,7 +1,7 @@
 var gmail;
 
 function refresh(f) {
-  if( typeof Gmail === "undefined" || typeof angular === 'undefined') {
+  if( typeof Gmail === "undefined") {
     console.log("Gmail undefined");
     setTimeout('refresh(' + f + ')', 10);
   } else {
@@ -10,9 +10,6 @@ function refresh(f) {
 }
 
 var main = function(){
-  app = angular.module("GmailApp", []);
-
-  app.factory('Gmail', fu)
 
   gmail = new Gmail();
 

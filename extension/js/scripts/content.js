@@ -6,13 +6,13 @@ var g = document.createElement('script');
 g.src = chrome.extension.getURL('js/dependencies/gmail.js');
 (document.head || document.documentElement).appendChild(g);
 
-var ang = document.createElement('script');
-ang.src = chrome.extension.getURL("js/dependencies/angular.min.js")
-(document.head || document.documentElement).appendChild(ang);
+// var ang = document.createElement('script');
+// ang.src = chrome.extension.getURL("js/dependencies/angular.min.js")
+// (document.head || document.documentElement).appendChild(ang);
 
-var ui = document.createElement('script');
-ui.src = chrome.extension.getURL("js/dependencies/angular-ui-router.min.js")
-(document.head || document.documentElement).appendChild(ang);
+// var ui = document.createElement('script');
+// ui.src = chrome.extension.getURL("js/dependencies/angular-ui-router.min.js")
+// (document.head || document.documentElement).appendChild(ang);
 
 var s = document.createElement('script');
 s.src = chrome.extension.getURL('js/scripts/custom.js');
