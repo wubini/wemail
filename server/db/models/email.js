@@ -1,13 +1,25 @@
 var mongoose = require('mongoose');
 
 var schema =  new mongoose.Schema({
-    emailAddress: {
-        type: String
-    },
     content: {
       type: String
     },
     subject: {
+      type: String
+    },
+    tags: [String],
+    location: {
+      latitude: Number,
+      longitude: Number
+    },
+    timestamp: {
+      type: Date
+    },
+    length: {
+      type: Number
+    },
+    words: [String],
+    gender:{
       type: String
     }
 });

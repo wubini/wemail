@@ -25,21 +25,25 @@ var main = function(){
   });
 
   gmail.observe.on('send_message', function(){
-    var email = arguments[2]
-    console.log("email");
-    gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
-    function onClickOK() {
-           var emailToSave = {
-             emailAddress: email.from,
-             subject: email.subject,
-             content: email.body
-           }
-           console.log("save this email", emailToSave);
-           var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
-           document.dispatchEvent(triggerSave);
-           $('#gmailJsModalBackground').remove();
-           $('#gmailJsModalWindow').remove();
-       });
+    if(collectEmails){
+      var email = arguments[2]
+      console.log("email");
+      gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
+      function onClickOK() {
+             var emailToSave = {
+               emailAddress: email.from,
+               subject: email.subject,
+               content: email.body
+             }
+             console.log("save this email", emailToSave);
+             var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
+             document.dispatchEvent(triggerSave);
+             $('#gmailJsModalBackground').remove();
+             $('#gmailJsModalWindow').remove();
+         });
+    }else{
+      console.log("Do something");
+    }
   });
 
   // gmail.observe.on("compose", function(){
