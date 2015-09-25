@@ -20,7 +20,12 @@ app.config(function ($stateProvider) {
     .state('emailsView', {
       url: "/emails",
       controller: 'emailsViewController',
-      templateUrl: 'js/scripts/app/emailsView/emails.html'
+      templateUrl: 'js/scripts/app/emailsView/emails.html',
+      resolve: {
+        allEmails: function(EmailFactory){
+          return EmailFactory.getAll();
+        }
+      }
     })
 });
 
@@ -45,14 +50,15 @@ app.controller('activeController', function($scope, $state){
   }
 });
 
-app.controller('emailsViewController', function($scope, $state, EmailFactory){
-  $scope.emails = [];
+app.controller('emailsViewController', function($scope, $state, allEmails, EmailFactory){
+  $scope.emails = allEmails;
+  console.log("got the emails", $scope.emails);
   chrome.runtime.sendMessage({message:"getEmails"})
   chrome.runtime.onMessage.addListener(function(message,sender){
     if(message.message === "updatedEmails"){
       console.log("Word emailss");
       console.log(message.emails);
-      $scope.emails = message.emails
+      //$scope.emails = message.emails
     }
   });
   $scope.activate = function(){
@@ -66,13 +72,13 @@ app.controller('emailsViewController', function($scope, $state, EmailFactory){
 app.factory("EmailFactory", function($http){
   factory = {};
   factory.getAll = function (){
-    return $http.get("/api/emails").then(function(response){
+    return $http.get("http://127.0.0.1:1337/api/emails").then(function(response){
       return response.data;
     })
   }
 
   factory.createNewEmail = function (newEmail){
-    return $http.post("/api/emails", newEmail).then(function(response){
+    return $http.post("http://127.0.0.1:1337/api/emails", newEmail).then(function(response){
       return response.data;
     })
   }

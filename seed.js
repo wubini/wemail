@@ -22,9 +22,12 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var Email = Promise.promisifyAll(mongoose.model("Email"));
+var faker = require('faker');
+
+var numEmails = 10000;
 
 var seedUsers = function () {
-
     var users = [
         {
             email: 'testing@fsa.com',
@@ -35,9 +38,59 @@ var seedUsers = function () {
             password: 'potus'
         }
     ];
-
     return User.createAsync(users);
+};
 
+var findLength = function(content){
+  var array = content.split(" ");
+  return array.length;
+};
+
+var findWord = function(content){
+  var array = content.split(" ");
+  var words = [];
+  array.forEach(function(word){
+    if(words.indexOf(word) === -1){
+      words.push(word);
+    }
+  });
+  return words;
+};
+
+var seedEmails = function() {
+  var emails = [];
+  for(var i = 0; i < numEmails; i++){
+    var email = {
+      content: null,
+      subject: null,
+      tags: [],
+      location: null,
+      timestamp: null,
+      length: null,
+      gender: null,
+      words: null,
+    };
+    email.content = faker.lorem.paragraphs();
+    email.subject = faker.lorem.sentence();
+    var numOfTags = faker.random.number();
+    for(var j = 0; j < numOfTags; j++){
+      var tag = faker.hacker.noun();
+      email.tags.push(tag);
+    }
+    var location = {
+      latitude: faker.address.latitude(),
+      longitude: faker.address.longitude()
+    };
+    email.timestamp = faker.date.past();
+    email.length = findLength(content);
+    var genderSetter = faker.random.number();
+    if(genderSetter > 1000) email.gender = "M";
+    else email.gender = "F";
+    email.words = findWords(content);
+    emails.push(emails);
+  }
+  console.log(emails);
+  return Email.createAsync(emails);
 };
 
 connectToDb.then(function () {
@@ -48,7 +101,11 @@ connectToDb.then(function () {
             console.log(chalk.magenta('Seems to already be user data, exiting!'));
             process.kill(0);
         }
-    }).then(function () {
+    }).then(function(){
+      console.log("Good");
+      return seedEmails();
+    }).then(function (emails) {
+        console.log("emails in seed ", emails);
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {

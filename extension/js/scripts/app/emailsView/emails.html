@@ -6,6 +6,7 @@
       </div>
       <div class="mdl-card__supporting-text">
         Number of Emails: {{emails.length}}
+        <p ng-repeat="email in emails">{{email}}/p>
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click = "sendEmailsToDataBase()">
