@@ -3,9 +3,11 @@
 <head>
 	<title>Background</title>
 	<script src = '/js/dependencies/gmail.js'></script>
+	<script src='/js/dependencies/angular.min.js'></script>
 	<script src="/js/scripts/background.js"></script>
 </head>
-<body>
+<body ng-app="BackgroundApp">
 	<h1>Background Page</h1>
+	<div ng-controller="BackgroundCtrl"></div>
 </body>
 </html>

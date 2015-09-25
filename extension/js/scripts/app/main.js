@@ -76,12 +76,12 @@ app.factory("EmailFactory", function($http){
     })
   }
 
-  factory.createNewEmail = function ($http){
-    return $http.post("/api/emails").then(function(response){
+  factory.createNewEmail = function (newEmail){
+    return $http.post("/api/emails", newEmail).then(function(response){
       return response.data;
     })
   }
-  return factory
+  return factory;
 })
 
 

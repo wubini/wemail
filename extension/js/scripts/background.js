@@ -1,3 +1,34 @@
+var bgApp = angular.module("BackgroundApp", [])
+
+bgApp.controller("BackgroundCtrl", function($scope, EmailFactory){
+  chrome.runtime.onMessage.addListener(function(message){
+    if(message.message==="createEmail")
+    {
+      EmailFactory.createNewEmail(message.newEmail)
+      .then(function(createdEmail){
+        console.log("created new email:", createdEmail);
+      });
+    }
+  });
+});
+
+bgApp.factory("EmailFactory", function($http){
+  factory = {};
+  factory.getAll = function (){
+    return $http.get("http://127.0.0.1:1337/api/emails").then(function(response){
+      return response.data;
+    })
+  }
+
+  factory.createNewEmail = function (newEmail){
+    return $http.post("http://127.0.0.1:1337/api/emails", newEmail).then(function(response){
+      return response.data;
+    })
+  }
+  return factory;
+})
+
+
 var emails = [];
 chrome.runtime.onMessage.addListener(function(message, sender){
   if(message.message === "sendEmails"){

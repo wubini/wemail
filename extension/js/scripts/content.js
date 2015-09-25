@@ -27,5 +27,5 @@ document.addEventListener('triggerSave', function(e){
   var email = e.detail;
   console.log(email);
   console.log("We here are ", email);
-  chrome.runtime.sendMessage({message: 'emailContent', emailContent: email});
+  chrome.runtime.sendMessage({message: 'createEmail', newEmail: email});
 });
