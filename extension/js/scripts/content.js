@@ -18,20 +18,21 @@ var s = document.createElement('script');
 s.src = chrome.extension.getURL('js/scripts/custom.js');
 (document.head || document.documentElement).appendChild(s);
 
-
-
 var forwardingMail = false;
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-  var button = document.createElement('button');
-  //var sendButton = $('.T-I J-J5-Ji aoO T-I-atl L3');
-  //console.dir(sendButton);
   if(message.message==='sendEmailToBackend'){
         forwardingMail = true;
         var sendEvent = new Event('send');
         document.dispatchEvent(sendEvent);
   }
 })
+
+document.addEventListener('triggerSave', function(e){
+  console.log("content got triggerSave with", e.detail);
+  var email = e.detail;
+  chrome.runtime.sendMessage({message: 'emailContent',emailContent: email});
+});
       // chrome.runtime.onMessage.addListener(function(message, sender,sendResponse){
       //   console.log("Message on Gmail ", message);
       //   document.getElementsByTagName('body')[0].appendChild(message.file.node);

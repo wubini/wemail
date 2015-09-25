@@ -20,34 +20,40 @@ var main = function(){
   });
 
   console.log('Hello,', gmail.get.user_email())
-  gmail.observe.on('save_draft', function(){
-    console.log("draft was saved", arguments);
-  });
+  // gmail.observe.on('save_draft', function(){
+  //   console.log("draft was saved", arguments);
+  // });
 
   gmail.observe.on('send_message', function(){
-    var content = arguments[2].body
-    gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
-    function() {
-      if(sendEmails){
-
-        console.log("message body", content);
-      }
-      $('#gmailJsModalBackground').remove();
-      $('#gmailJsModalWindow').remove();
-    });
+    var email = arguments[2];
+    if(sendEmails)
+    {
+      gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
+      function onClickOK() {
+          var emailToSave = {
+            emailAddress: email.from,
+            subject: email.subject,
+            content: email.body
+          }
+          console.log("save this email", emailToSave);
+          var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
+          document.dispatchEvent(triggerSave);
+          $('#gmailJsModalBackground').remove();
+          $('#gmailJsModalWindow').remove();
+      });
+    }
   });
 
-  gmail.observe.on("compose", function(){
-
-    chrome.runtime.sendMessage({message: 'composing'});
-    // gmail.tools.add_modal_window('Clean inbox', 'Do you want to continue?',
-    // function() {
-    //   console.log("cleaned inbox");
-    // });
-
-  })
+  // gmail.observe.on("compose", function(){
+  //
+  //   chrome.runtime.sendMessage({message: 'composing'});
+  //   // gmail.tools.add_modal_window('Clean inbox', 'Do you want to continue?',
+  //   // function() {
+  //   //   console.log("cleaned inbox");
+  //   // });
+  //
+  // })
 
 }
-
 
 refresh(main);
