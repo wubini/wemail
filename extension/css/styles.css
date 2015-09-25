@@ -5,3 +5,42 @@ body {
  min-width: 800px;
  min-height: 800px;
 }
+
+
+.home-card-wide.mdl-card {
+    width: 100%;
+  }
+.home-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 200px;
+  background: url('../assets/emailsFromAround.jpg') center / cover;
+}
+.home-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+
+.activate-card-wide.mdl-card {
+    width: 100%;
+  }
+.activate-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 200px;
+  background: url('../assets/active.jpg') center / cover;
+}
+.activate-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+
+.emails-card-wide.mdl-card {
+    width: 100%;
+  }
+.emails-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 200px;
+  background: url('../assets/email.gif') center / cover;
+}
+.emails-card-wide > .mdl-card__menu {
+  color: #fff;
+}

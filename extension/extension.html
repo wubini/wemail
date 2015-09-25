@@ -6,19 +6,17 @@
     <script src="/js/dependencies/angular.min.js"></script>
     <script src="/js/dependencies/angular-ui-router.min.js"></script>
     <script src="/js/dependencies/ui-bootstrap.min.js"></script>
-    <script src="/css/material.min.js"></script>
 	  <link rel="stylesheet" href="/css/material.min.css">
+		<script src="/css/material.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 	  <script src="/js/scripts/app/main.js"></script>
 	</head>
 	<body ng-app="GmailApp">
-		<navbar></navbar>
-    <br>
-    <center>
-    <main class="mdl-layout__content">
-      <div class = "content" ui-view></div>
-    </main>
-  </center>
-
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+			<navbar></navbar>
+	    <main class="mdl-layout__content">
+	      <div id = "content" ui-view></div>
+	    </main>
+		</div>
 	</body>
 </html>

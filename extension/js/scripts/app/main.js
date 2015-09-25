@@ -60,11 +60,6 @@ app.controller('emailsViewController', function($scope, $state, EmailFactory){
     chrome.runtime.sendMessage({message:"sendEmails"});
   }
   $scope.sendEmailsToDataBase = function(){
-    var emailPromises = []
-    $scope.emails.forEach(function(email){
-      emailPromises.push(EmailFactory.createNewEmail(email));
-    })
-    console.log(emailPromises);
   }
 });
 

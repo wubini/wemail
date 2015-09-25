@@ -1,33 +1,60 @@
-<style>
-.demo-card-wide.mdl-card {
-  width: 700px;
-  height: 1000px;
-}
-.demo-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 176px;
-  background: url('../assets/emailsFromAround.jpg') center / cover;
-}
-.demo-card-wide > .mdl-card__menu {
-  color: #fff;
-}
-</style>
+<div class = "mdl-grid">
 
-<div class="demo-card-wide mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Welcome</h2>
+  <div class = "mdl-cell mdl-cell--4-col">
+    <div class="home-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Welcome</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        We thank you for using our application.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref = "about">
+          Learn how to use it.
+        </a>
+      </div>
+      <div class="mdl-card__menu">
+      </div>
+    </div>
   </div>
-  <div class="mdl-card__supporting-text">
-    We thank you for using our application.
+
+  <div class = "mdl-cell mdl-cell--4-col">
+    <div class="activate-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Share your emails</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Start sharing your great emails with the world.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref = "active">
+          Go Activate
+        </a>
+      </div>
+      <div class="mdl-card__menu">
+      </div>
+    </div>
   </div>
-  <div class="mdl-card__actions mdl-card--border">
-    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click = "goToAbout()">
-      Learn how to use it.
-    </a>
-  </div>
-  <div class="mdl-card__menu">
-    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-      <i class="material-icons">share</i>
-    </button>
+
+
+</div>
+
+<div class = "mdl-grid">
+  <div class = "mdl-cell mdl-cell--8-col">
+    <div class="emails-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Anonymize your emails</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Tell us how you want to anonymize your emails.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref = "emailsView">
+          See Emails
+        </a>
+      </div>
+      <div class="mdl-card__menu">
+      </div>
+    </div>
   </div>
 </div>
