@@ -1,0 +1,7 @@
+* {
+  box-sizing: border-box; }
+
+body {
+ min-width: 800px;
+ min-height: 800px;
+}

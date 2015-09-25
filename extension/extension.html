@@ -1,13 +1,24 @@
-<!doctype html>
-<html>
-  <head>
-    <title>GTmetrix Analyzer</title>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="extension.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Emails</title>
+  	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <script src="/js/dependencies/angular.min.js"></script>
+    <script src="/js/dependencies/angular-ui-router.min.js"></script>
+    <script src="/js/dependencies/ui-bootstrap.min.js"></script>
+    <script src="/css/material.min.js"></script>
+	  <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+	  <script src="/js/scripts/app/main.js"></script>
+	</head>
+	<body ng-app="GmailApp">
+		<navbar></navbar>
+    <br>
+    <center>
+    <main class="mdl-layout__content">
+      <div class = "content" ui-view></div>
+    </main>
+  </center>
 
-  </head>
-  <body>
-    <h1>GTmetrix Analyzer</h1>
-    <button id="checkPage">Check this page now!</button>
-  </body>
+	</body>
 </html>
