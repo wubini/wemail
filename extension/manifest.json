@@ -1,0 +1,34 @@
+{
+  "name": "The Emails of Others",
+  "description": "An application that allows users to send emails to a central repo and in turn access other people's emails",
+  "manifest_version": 2,
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "permissions": [
+    "activeTab",
+    "background",
+    "http://*/",
+    "https://*/",
+    "webRequest"
+   ],
+   "version": "0.1",
+   "browser_action": {
+     "default_icon": "icon128.png",
+     "default_popup": "/views/extension.html",
+     "default_title": "Kathy"
+   },
+   "content_scripts": [{
+      "js": ["/js/dependencies/jquery-1.11.3.min.js", "/js/scripts/content.js"],
+      "css": ["/css/styles.css"],
+      "matches": ["*://mail.google.com/*"]
+   }],
+  "icons": {
+      "128": "icon128.png"
+    },
+  "web_accessible_resources": [
+    "/js/scripts/custom.js",
+    "/js/dependencies/gmail.js"
+  ]
+}
