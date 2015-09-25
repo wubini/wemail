@@ -15,7 +15,7 @@
    ],
    "version": "0.1",
    "browser_action": {
-     "default_icon": "icon128.png",
+     "default_icon": "assets/logo.png",
      "default_popup": "/extension.html",
      "default_title": "Kathy"
    },
@@ -24,7 +24,7 @@
       "matches": ["*://mail.google.com/*"]
    }],
   "icons": {
-      "128": "icon128.png"
+      "128": "assets/logo.png"
     },
    // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": [
