@@ -1,1 +1,1 @@
-window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt']);
+window.app = angular.module('TheEmailsOfOthers', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt']);
