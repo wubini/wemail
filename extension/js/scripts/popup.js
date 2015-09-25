@@ -1,11 +1,3 @@
-// window.app = angular.module("GmailApp",[]);
-//
-// app.controller("")
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function(){
   var activateButton = document.getElementsByTagName("button")[0];

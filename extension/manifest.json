@@ -16,20 +16,21 @@
    "version": "0.1",
    "browser_action": {
      "default_icon": "icon128.png",
-     "default_popup": "/views/extension.html",
+     "default_popup": "/extension.html",
      "default_title": "Kathy"
    },
    "content_scripts": [{
       "js": ["/js/dependencies/jquery-1.11.3.min.js", "/js/scripts/content.js"],
-      "css": ["/css/styles.css"],
       "matches": ["*://mail.google.com/*"]
    }],
   "icons": {
       "128": "icon128.png"
     },
+   // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": [
     "/js/scripts/custom.js",
     "/js/dependencies/gmail.js",
-    "/js/dependencies/jquery-1.11.3.min.js"
+    "js/dependencies/jquery-1.11.3.min.js"
+
   ]
 }
