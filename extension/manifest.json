@@ -31,5 +31,6 @@
     "/js/scripts/custom.js",
     "/js/dependencies/gmail.js",
     "js/dependencies/jquery-1.11.3.min.js"
+
   ]
 }
