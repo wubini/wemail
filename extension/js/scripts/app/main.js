@@ -17,6 +17,11 @@ app.config(function ($stateProvider) {
       controller: 'activeController',
       templateUrl: 'js/scripts/app/active/active.html'
     })
+    .state('emailsView', {
+      url: "/emails",
+      controller: 'emailsViewController',
+      templateUrl: 'js/scripts/app/emailsView/emails.html'
+    })
 });
 
 app.controller("homeController", function($scope, $state){
@@ -39,6 +44,23 @@ app.controller('activeController', function($scope, $state){
     chrome.runtime.sendMessage({message:"sendEmails"});
   }
 });
+
+app.controller('emailsViewController', function($scope, $state){
+  $scope.emails = [];
+  chrome.runtime.sendMessage({message:"getEmails"})
+  chrome.runtime.onMessage.addListener(function(message,sender){
+    if(message.message === "updatedEmails"){
+      console.log("Word emailss");
+      console.log(message.emails);
+      $scope.emails = message.emails
+    }
+  });
+  $scope.activate = function(){
+    console.log("Activate works");
+    chrome.runtime.sendMessage({message:"sendEmails"});
+  }
+});
+
 
 app.directive('navbar', function(){
   return {

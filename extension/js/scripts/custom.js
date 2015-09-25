@@ -25,7 +25,8 @@ var main = function(){
   });
 
   gmail.observe.on('send_message', function(){
-    var email = arguments[2].body
+    var email = arguments[2]
+    console.log("email");
     gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
     function onClickOK() {
            var emailToSave = {
@@ -41,15 +42,15 @@ var main = function(){
        });
   });
 
-  gmail.observe.on("compose", function(){
-
-    chrome.runtime.sendMessage({message: 'composing'});
-    // gmail.tools.add_modal_window('Clean inbox', 'Do you want to continue?',
-    // function() {
-    //   console.log("cleaned inbox");
-    // });
-
-  })
+  // gmail.observe.on("compose", function(){
+  //
+  //   chrome.runtime.sendMessage({message: 'composing'});
+  //   // gmail.tools.add_modal_window('Clean inbox', 'Do you want to continue?',
+  //   // function() {
+  //   //   console.log("cleaned inbox");
+  //   // });
+  //
+  // })
 
 }
 
