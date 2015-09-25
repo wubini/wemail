@@ -15,8 +15,15 @@ var forwardingMail = false;
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
   var button = document.createElement('button');
   if(message.message==='sendEmailToBackend'){
+        console.log("sendEmailToBackend");
         forwardingMail = true;
-        var sendEvent = new Event('send');
+        var sendEvent = new Event('collectEmails');
         document.dispatchEvent(sendEvent);
   }
 })
+
+document.addEventListener('triggerSave', function(e){
+  console.log("content got triggerSave with", e.detail);
+  var email = e.detail;
+  chrome.runtime.sendMessage({message: 'emailContent',emailContent: email});
+});

@@ -13,10 +13,10 @@ var main = function(){
 
   gmail = new Gmail();
 
-  var sendEmails = false;
+  var collectEmails = false;
 
-  document.addEventListener('send', function(){
-    sendEmails = true;
+  document.addEventListener('collectEmails', function(){
+    collectEmails = true;
   });
 
   console.log('Hello,', gmail.get.user_email())
@@ -25,16 +25,20 @@ var main = function(){
   });
 
   gmail.observe.on('send_message', function(){
-    var content = arguments[2].body
+    var email = arguments[2].body
     gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
-    function() {
-      if(sendEmails){
-
-        console.log("message body", content);
-      }
-      $('#gmailJsModalBackground').remove();
-      $('#gmailJsModalWindow').remove();
-    });
+    function onClickOK() {
+           var emailToSave = {
+             emailAddress: email.from,
+             subject: email.subject,
+             content: email.body
+           }
+           console.log("save this email", emailToSave);
+           var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
+           document.dispatchEvent(triggerSave);
+           $('#gmailJsModalBackground').remove();
+           $('#gmailJsModalWindow').remove();
+       });
   });
 
   gmail.observe.on("compose", function(){

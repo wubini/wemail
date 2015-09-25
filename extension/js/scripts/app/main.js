@@ -12,6 +12,11 @@ app.config(function ($stateProvider) {
       controller: 'aboutController',
       templateUrl: 'js/scripts/app/about/about.html'
     })
+    .state('active', {
+      url: '/active',
+      controller: 'activeController',
+      templateUrl: 'js/scripts/app/active/active.html'
+    })
 });
 
 app.controller("homeController", function($scope, $state){
@@ -19,11 +24,20 @@ app.controller("homeController", function($scope, $state){
     $state.go('about');
     console.log("Home controller");
   }
-  console.log("Home controller");
 });
 
 app.controller("aboutController", function($scope, $state){
-  console.log("about controller");
+  $scope.goToActiveState = function(){
+    $state.go('active');
+    console.log("active controller");
+  }
+});
+
+app.controller('activeController', function($scope, $state){
+  $scope.activate = function(){
+    console.log("Activate works");
+    chrome.runtime.sendMessage({message:"sendEmails"});
+  }
 });
 
 app.directive('navbar', function(){
