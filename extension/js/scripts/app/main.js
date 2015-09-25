@@ -45,7 +45,7 @@ app.controller('activeController', function($scope, $state){
   }
 });
 
-app.controller('emailsViewController', function($scope, $state){
+app.controller('emailsViewController', function($scope, $state, EmailFactory){
   $scope.emails = [];
   chrome.runtime.sendMessage({message:"getEmails"})
   chrome.runtime.onMessage.addListener(function(message,sender){
@@ -59,7 +59,30 @@ app.controller('emailsViewController', function($scope, $state){
     console.log("Activate works");
     chrome.runtime.sendMessage({message:"sendEmails"});
   }
+  $scope.sendEmailsToDataBase = function(){
+    var emailPromises = []
+    $scope.emails.forEach(function(email){
+      emailPromises.push(EmailFactory.createNewEmail(email));
+    })
+    console.log(emailPromises);
+  }
 });
+
+app.factory("EmailFactory", function($http){
+  factory = {};
+  factory.getAll = function (){
+    return $http.get("/api/emails").then(function(response){
+      return response.data;
+    })
+  }
+
+  factory.createNewEmail = function ($http){
+    return $http.post("/api/emails").then(function(response){
+      return response.data;
+    })
+  }
+  return factory
+})
 
 
 app.directive('navbar', function(){
