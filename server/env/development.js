@@ -2,18 +2,18 @@ module.exports = {
   "DATABASE_URI": "mongodb://localhost:27017/gmail-app",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "TWITTER": {
-    "consumerKey": "INSERT_TWITTER_CONSUMER_KEY_HERE",
-    "consumerSecret": "INSERT_TWITTER_CONSUMER_SECRET_HERE",
-    "callbackUrl": "INSERT_TWITTER_CALLBACK_HERE"
+    "consumerKey": "NPVkmbDdm117LP5m6o1LYZ7RI",
+    "consumerSecret": "uQmw9ay6WedgnvZJameORKBuxEE0XRVg8J3TdE2A9Dt2hLAAGx",
+    "callbackUrl": "http://127.0.0.1:1337/auth/twitter/callback"
   },
   "FACEBOOK": {
-    "clientID": "INSERT_FACEBOOK_CLIENTID_HERE",
-    "clientSecret": "INSERT_FACEBOOK_CLIENT_SECRET_HERE",
-    "callbackURL": "INSERT_FACEBOOK_CALLBACK_HERE"
+    "clientID": "1481547792146697",
+    "clientSecret": "f5ba9b43dca2fac3b25a4ecc432909ea",
+    "callbackURL": "http://127.0.0.1:1337/auth/facebook/callback"
   },
   "GOOGLE": {
-    "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
-    "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
-    "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+    "clientID": "18279746287-4dp0je90cdqtjlqqj9m3o3hmi2m52i6g.apps.googleusercontent.com",
+    "clientSecret": "vexQ7YK4XEuU8qOCyDsSCIJw",
+    "callbackURL": "http://127.0.0.1:1337/auth/google/callback"
   }
 };
