@@ -63,7 +63,7 @@ app.controller('emailsViewController', function($scope, $state, allEmails, Email
   });
   $scope.activate = function(){
     console.log("Activate works");
-    chrome.runtime.sendMessage({message:"sendEmails"});
+    chrome.runtime.sendMessage({message:"sendEmailsToBackend"});
   }
   $scope.sendEmailsToDataBase = function(){
   }
@@ -90,5 +90,22 @@ app.directive('navbar', function(){
   return {
     restrict: 'E',
     templateUrl: 'js/scripts/app/common/directives/navbar/navbar.html'
+    // link: function(UserFactory){
+    //   scope.user = null;
+    //   scope.isLoggedIn = function(){
+    //     return AuthService.isAuthenticated();
+    //   };
+    //   scope.logout = function () {
+    //     AuthService.logout().then(function () {
+    //          window.location.replace("/");
+    //       });
+    //   };
+    //   var setUser = function(){
+    //     AuthService.getLoggedInUser().then(function(user){
+    //       scope.user = user;
+    //     })
+    //   };
+    //   setUser();
+    // }
   }
 });
