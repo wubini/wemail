@@ -1,6 +1,7 @@
 'use strict';
 
 // All used modules.
+
 var babel = require('gulp-babel');
 var gulp = require('gulp');
 var runSeq = require('run-sequence');
@@ -50,7 +51,6 @@ gulp.task('buildJS', ['lintJS'], function () {
 });
 
 gulp.task('testServerJS', function () {
-    require('babel/register');
 	return gulp.src('./tests/server/**/*.js', {
 		read: false
 	}).pipe(mocha({ reporter: 'spec' }));

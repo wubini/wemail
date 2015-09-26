@@ -1,3 +1,5 @@
-var app = angular.module('FrontPageApp', ['BackgroundApp'])
+var app = angular.module('FrontPageApp', ['ui.router'])
 
-console.log("in browser app.js");
+app.run(function ($rootScope){
+  $rootScope.$on("$stateChangeError", console.log.bind(console));
+});
