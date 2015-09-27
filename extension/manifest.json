@@ -21,6 +21,7 @@
    },
    "content_scripts": [{
       "js": ["/js/dependencies/jquery-1.11.3.min.js", "/js/scripts/content.js"],
+      "css": ["/css/material.min.css"],
       "matches": ["*://mail.google.com/*"]
    }],
   "icons": {
