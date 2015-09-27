@@ -2,13 +2,13 @@
   box-sizing: border-box; }
 
 body {
- min-width: 800px;
- min-height: 800px;
+ min-width: 400px;
+ min-height: 400px;
 }
 
 .android-be-together-section {
   position: relative;
-  height: 800px;
+  height: 400px;
   width: auto;
   background-color: #f3f3f3;
   // background: url('assets/homeGlobal.jpg') center 30% no-repeat;
@@ -16,7 +16,7 @@ body {
 }
 .android-slogan {
   font-size: 60px;
-  padding-top: 160px;
+  padding-top: 50px;
 }
 .android-font {
   font-family: 'And Black', 'Helvetica', 'Arial', sans-serif;
