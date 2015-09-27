@@ -23,10 +23,40 @@ var main = function(){
   document.addEventListener('doNotCollectEmails', function(){
     collectEmails = false;
   });
+
+  document.addEventListener('styledDraft', function(styledDraft){
+    console.log("in custom with styled draft", styledDraft.detail);
+    document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = styledDraft.detail;
+  })
+
   console.log('Hello,', gmail.get.user_email())
   gmail.observe.on('save_draft', function(){
+    var contents = arguments[2].body;
+    var draft = new CustomEvent('savedDraft', {detail: contents});
+    document.dispatchEvent(draft);
     console.log("draft was saved", arguments);
   });
+
+
+  gmail.observe.on('compose', function(){
+   names = [];
+   var compose_ref = gmail.dom.composes()[0];
+   var end = ["San Serif", "Serif", "Fixed Width", "Wide", "Narrow", "Comic Sans MS", "Garamond", "Georgia", "Tahoma", "Trebuchet MS", "Verdana"]
+   gmail.tools.add_compose_button(compose_ref, 'Anonymize', function() {
+       //var current = gmail.dom.composes()[0];
+
+       var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
+       console.log("contentHTML", contentHTML);
+       //var email = current.$el[0].innerText.split("\n")
+       var text = [];
+
+       contentHTML = contentHTML.replace(/\<span[^\>]*\>/g,"").replace(/\<\/span[^\>]*\>/g,"");
+
+      console.log("unstyled contentHTML", contentHTML);
+       document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = contentHTML;
+     }, 'mdl-button mdl-js-button mdl-button--accent');
+ });
+
 
   gmail.observe.on('send_message', function(){
     console.log("We hit save");
@@ -42,6 +72,8 @@ var main = function(){
              console.log('content', emailToSave.content);
              emailToSave.content = emailToSave.content.replace(/[\n]+/g, "\n");
              emailToSave.content = emailToSave.content.replace(/\u00a0/g, " ");
+             var modifyEmail = new CustomEvent("anonymize", {email:emailToSave.content});
+             document.dispatchEvent(modifyEmail);
              console.log("save this email", emailToSave);
              console.log("email content", emailToSave.content);
              var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});

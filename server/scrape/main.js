@@ -41,6 +41,11 @@ function getAllNames(err,resp,html){
     var text = name.text()
     names.push(text)
   });
+  parsedHTML(".E").map(function(i,name){
+    name = $(name);
+    var text = name.text()
+    names.push(text)
+  });
 }
 
 var allDomains = [];
@@ -96,9 +101,9 @@ var allDomainsInterval = setInterval(function(){
         });
       }
       console.log(names.length);
-    },500);
+    },1000);
   }
-},500);
+},1000);
 
 
 
