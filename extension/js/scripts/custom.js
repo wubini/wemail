@@ -19,6 +19,10 @@ var main = function(){
     collectEmails = true;
   });
 
+  document.addEventListener('doNotCollectEmails', function(){
+    collectEmails = false;
+  });
+
   console.log('Hello,', gmail.get.user_email())
   gmail.observe.on('save_draft', function(){
     console.log("draft was saved", arguments);
@@ -41,21 +45,8 @@ var main = function(){
              $('#gmailJsModalBackground').remove();
              $('#gmailJsModalWindow').remove();
          });
-    }else{
-      console.log("Do something");
     }
   });
-
-  // gmail.observe.on("compose", function(){
-  //
-  //   chrome.runtime.sendMessage({message: 'composing'});
-  //   // gmail.tools.add_modal_window('Clean inbox', 'Do you want to continue?',
-  //   // function() {
-  //   //   console.log("cleaned inbox");
-  //   // });
-  //
-  // })
-
 }
 
 

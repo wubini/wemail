@@ -26,7 +26,6 @@
   "icons": {
       "128": "assets/logo.png"
     },
-   // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": [
     "/js/scripts/custom.js",
     "/js/dependencies/gmail.js",

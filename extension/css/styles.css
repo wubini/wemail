@@ -6,41 +6,26 @@ body {
  min-height: 800px;
 }
 
-
-.home-card-wide.mdl-card {
-    width: 100%;
-  }
-.home-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 200px;
-  background: url('../assets/emailsFromAround.jpg') center / cover;
+.android-be-together-section {
+  position: relative;
+  height: 800px;
+  width: auto;
+  background-color: #f3f3f3;
+  // background: url('assets/homeGlobal.jpg') center 30% no-repeat;
+  background-size: cover;
 }
-.home-card-wide > .mdl-card__menu {
-  color: #fff;
+.android-slogan {
+  font-size: 60px;
+  padding-top: 160px;
 }
-
-
-.activate-card-wide.mdl-card {
-    width: 100%;
-  }
-.activate-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 200px;
-  background: url('../assets/active.jpg') center / cover;
-}
-.activate-card-wide > .mdl-card__menu {
-  color: #fff;
+.android-font {
+  font-family: 'And Black', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  color: #767777;
+  font-weight: 300;
 }
 
-
-.emails-card-wide.mdl-card {
-    width: 100%;
-  }
-.emails-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 200px;
-  background: url('../assets/email.gif') center / cover;
-}
-.emails-card-wide > .mdl-card__menu {
-  color: #fff;
+.android-sub-slogan {
+  font-size: 21px;
+  padding-top: 24px;
 }
