@@ -23,8 +23,17 @@ var main = function(){
   document.addEventListener('doNotCollectEmails', function(){
     collectEmails = false;
   });
+
+  document.addEventListener('styledDraft', function(styledDraft){
+    console.log("in custom with styled draft", styledDraft.detail);
+    document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = styledDraft.detail;
+  })
+
   console.log('Hello,', gmail.get.user_email())
   gmail.observe.on('save_draft', function(){
+    var contents = arguments[2].body;
+    var draft = new CustomEvent('savedDraft', {detail: contents});
+    document.dispatchEvent(draft);
     console.log("draft was saved", arguments);
   });
 

@@ -12,6 +12,7 @@ s.src = chrome.extension.getURL('js/scripts/custom.js');
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     var button = document.createElement('button');
+    console.log("message in content.js", message);
     if(message.message==='sendEmailsToBackend'){
           console.log("sendEmailToBackend");
           var sendEvent = new Event('collectEmails');
@@ -19,6 +20,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     }else if(message.message === "doNotSendEmailsToBackend"){
       var sendEvent = new Event('doNotCollectEmails');
       document.dispatchEvent(sendEvent);
+    }else if(message.message === "styledDraft"){
+      console.log("in content with styled draft", message.styledDraft);
+      var styledDraft = new CustomEvent('styledDraft', {detail: message.styledDraft});
+      document.dispatchEvent(styledDraft);
     }
 })
 
@@ -29,3 +34,9 @@ document.addEventListener('triggerSave', function(e){
   console.log("We here are ", email);
   chrome.runtime.sendMessage({message: 'createEmail', newEmail: email});
 });
+
+document.addEventListener('savedDraft', function(e){
+  var draft = e.detail;
+  console.log("content got draft", draft);
+  chrome.runtime.sendMessage({message: 'savedDraft', savedDraft: draft});
+})

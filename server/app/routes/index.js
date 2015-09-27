@@ -4,6 +4,8 @@ module.exports = router;
 
 router.use('/user', require('./user'));
 router.use('/emails', require("./email"));
+router.use('/names', require("./names"));
+
 
 
 
