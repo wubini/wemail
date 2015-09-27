@@ -11,7 +11,6 @@ s.src = chrome.extension.getURL('js/scripts/custom.js');
 (document.head || document.documentElement).appendChild(s);
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-    var button = document.createElement('button');
     console.log("message in content.js", message);
     if(message.message==='sendEmailsToBackend'){
           console.log("sendEmailToBackend");
@@ -20,10 +19,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     }else if(message.message === "doNotSendEmailsToBackend"){
       var sendEvent = new Event('doNotCollectEmails');
       document.dispatchEvent(sendEvent);
-    }else if(message.message === "styledDraft"){
-      console.log("in content with styled draft", message.styledDraft);
-      var styledDraft = new CustomEvent('styledDraft', {detail: message.styledDraft});
-      document.dispatchEvent(styledDraft);
+    }else if(message.message === "highlightedDraft"){
+      console.log("in content with highlighted draft", message.highlightedDraft);
+      var highlightedDraft = new CustomEvent('highlightedDraft', {detail: message.highlightedDraft});
+      document.dispatchEvent(highlightedDraft);
     }
 })
 
@@ -35,8 +34,14 @@ document.addEventListener('triggerSave', function(e){
   chrome.runtime.sendMessage({message: 'createEmail', newEmail: email});
 });
 
-document.addEventListener('savedDraft', function(e){
-  var draft = e.detail;
-  console.log("content got draft", draft);
-  chrome.runtime.sendMessage({message: 'savedDraft', savedDraft: draft});
-});
+// document.addEventListener('savedDraft', function(e){
+//   var draft = e.detail;
+//   console.log("content got draft", draft);
+//   chrome.runtime.sendMessage({message: 'savedDraft', savedDraft: draft});
+// });
+
+document.addEventListener('addHighlights', function(e){
+  var contentHTML = e.detail;
+  console.log("content got unhighlighted version", contentHTML);
+  chrome.runtime.sendMessage({message: 'addHighlights', unhighlighted: contentHTML});
+})
