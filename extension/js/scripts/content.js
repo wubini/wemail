@@ -10,16 +10,16 @@ var s = document.createElement('script');
 s.src = chrome.extension.getURL('js/scripts/custom.js');
 (document.head || document.documentElement).appendChild(s);
 
-var forwardingMail = false;
-
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-  var button = document.createElement('button');
-  if(message.message==='sendEmailToBackend'){
-        console.log("sendEmailToBackend");
-        forwardingMail = true;
-        var sendEvent = new Event('collectEmails');
-        document.dispatchEvent(sendEvent);
-  }
+    var button = document.createElement('button');
+    if(message.message==='sendEmailToBackend'){
+          console.log("sendEmailToBackend");
+          var sendEvent = new Event('collectEmails');
+          document.dispatchEvent(sendEvent);
+    }else if(message.message === "doNotSendEmailsToBackend"){
+      var sendEvent = new Event('doNotCollectEmails');
+      document.dispatchEvent(sendEvent);
+    }
 })
 
 document.addEventListener('triggerSave', function(e){

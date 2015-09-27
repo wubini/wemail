@@ -3,19 +3,40 @@
 	<head>
 		<title>Emails</title>
   	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <script src="/js/dependencies/angular.min.js"></script>
-    <script src="/js/dependencies/angular-ui-router.min.js"></script>
-    <script src="/js/dependencies/ui-bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	  <link rel="stylesheet" href="/css/material.min.css">
-		<script src="/css/material.min.js"></script>
+		<link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+		<script src="/js/dependencies/angular.min.js"></script>
+		<script src="/js/dependencies/angular-ui-router.min.js"></script>
+		<script src="/js/dependencies/ui-bootstrap.min.js"></script>
 	  <script src="/js/scripts/app/main.js"></script>
 	</head>
-	<body ng-app="GmailApp">
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
-			<navbar></navbar>
+	<body ng-app="GmailApp" ng-controller = "mainController">
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		  <header class="mdl-layout__header">
+		    <div class="mdl-layout__header-row">
+		      <span class="mdl-layout-title">
+		        <img class="android-logo-image" style = "width: 100px" src="/assets/logo.png">
+		        WeMail
+		      </span>
+		    </div>
+		  </header>
 	    <main class="mdl-layout__content">
-	      <div id = "content" ui-view></div>
+				<div class="android-content mdl-layout__content" ui-view>
+					<a name="top"></a>
+					<div class="android-be-together-section mdl-typography--text-center">
+						<div class="android-font android-slogan">read emails from around the world.</div>
+						<div class="android-font android-sub-slogan">welcome to WeMail... a platform that reveals patterns in the world's email</div>
+						<br>
+						<button class="mdl-button mdl-js-button mdl-button--accent" ng-if = "activated" ng-click = "deactivate()">
+							Turn Off
+						</button>
+						<button class="mdl-button mdl-js-button mdl-button--accent" ng-if = "!activated" ng-click = "activate()">
+							Turn On
+						</button>
+					</div>
+				</div>
 	    </main>
 		</div>
 	</body>

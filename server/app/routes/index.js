@@ -2,7 +2,7 @@
 var router = require('express').Router();
 module.exports = router;
 
-router.use('/members', require('./members'));
+router.use('/user', require('./user'));
 router.use('/emails', require("./email"));
 
 
