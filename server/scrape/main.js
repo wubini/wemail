@@ -79,7 +79,17 @@ var allDomainsInterval = setInterval(function(){
       }
       if(newCount === 20){
         console.log("Here")
-        fs.writeFile("./names.txt", JSON.stringify(names), function(err) {
+        var sorted = names.sort();
+        var namesObj = {};
+        sorted.forEach(function(name){
+          var firstLetter = name[0];
+          if(namesObj[firstLetter] === undefined){
+            namesObj[firstLetter] = [];
+          }
+          namesObj[firstLetter].push(name);
+        })
+        console.log(namesObj)
+        fs.writeFile("./names.txt", JSON.stringify(namesObj), function(err) {
           if(err) return console.err
           clearInterval(allNames);
           clearInterval(allDomainsInterval);
