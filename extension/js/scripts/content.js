@@ -39,4 +39,4 @@ document.addEventListener('savedDraft', function(e){
   var draft = e.detail;
   console.log("content got draft", draft);
   chrome.runtime.sendMessage({message: 'savedDraft', savedDraft: draft});
-})
+});

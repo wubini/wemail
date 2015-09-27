@@ -15,7 +15,39 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
     console.log("bg got message", message)
     if(message.message==="createEmail")
     {
-      EmailFactory.createNewEmail(message.newEmail)
+      var email = message.newEmail.content;
+      console.log("backgroun got email", email);
+      var regex = /[A-Z]\w*/g, result, capitalizedWords = [];
+      while ( (result = regex.exec(email)) ) {
+          capitalizedWords.push({word: result[0], index: result.index});
+      }
+
+      console.log("capitalizedWords before anon", capitalizedWords);
+      capitalizedWords = capitalizedWords.map(function(capitalizedWord){
+        var nameArray = $scope.allNames[capitalizedWord.word[0]];
+        capitalizedWord.oldWord = capitalizedWord.word;
+        if(nameArray.indexOf(capitalizedWord.word)>-1){
+          capitalizedWord.word = capitalizedWord.word[0];
+        }
+        return capitalizedWord;
+      });
+
+      for (var i = capitalizedWords.length -1; i>=0; i--)
+      {
+        var capitalizedWord = capitalizedWords[i];
+        console.log("inserting anonymized capitalizedWord", capitalizedWord);
+        console.log('email before slice', email);
+        var firstPart = email.slice(0, capitalizedWord.index);
+        var secondPart = email.slice(capitalizedWord.index + capitalizedWord.oldWord.length);
+        email = firstPart + capitalizedWord.word + secondPart;
+      }
+
+      var emailToSave = {
+        content: email,
+        subject: message.newEmail.subject
+      }
+
+      EmailFactory.createNewEmail(emailToSave)
       .then(function(createdEmail){
         console.log("created new email: ", createdEmail);
       });
@@ -30,17 +62,12 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
 
       capitalizedWords = capitalizedWords.map(function(capitalizedWord){
         var nameArray = $scope.allNames[capitalizedWord.word[0]];
-        if(nameArray.indexOf(capitalizedWord.word)>0){
-          return {
-            oldWord: capitalizedWord.word,
-            word: "<span style='background-color:pink;'>"+capitalizedWord.word+"</span>",
-            index: capitalizedWord.index
-          };
+        capitalizedWord.oldWord = capitalizedWord.word;
+        console.log(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7));
+        if(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7)!=="</span>" && nameArray.indexOf(capitalizedWord.word)>-1){
+          capitalizedWord.word = "<span style='background-color:limegreen;'>"+capitalizedWord.word+"</span>";
         }
-        else {
-          capitalizedWord.oldWord = capitalizedWord.word;
-          return capitalizedWord;
-        }
+        return capitalizedWord;
       });
 
       console.log("styled text", capitalizedWords);
@@ -82,6 +109,8 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
         chrome.runtime.sendMessage({message:"updatedEmails", emails: emails})
     }else if(message.message === "extensionStatus"){
       chrome.runtime.sendMessage({message:"status", status: sendingEmails})
+    }else if(message.message === "anonymize"){
+
     }
   });
 });
