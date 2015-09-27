@@ -66,12 +66,10 @@ var main = function(){
 
 
   gmail.observe.on('send_message', function(){
-    console.log("We hit save");
+    console.log("We hit send");
 
     if(collectEmails){
-      console.log("1. collecting emails");
       var email = arguments[2];
-      console.log("2. trying to show modal window...");
       gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
       function onClickOK() {
          var emailToSave = {
