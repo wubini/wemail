@@ -13,8 +13,10 @@ app.config(function ($stateProvider) {
 });
 
 app.controller("TagGraphCtrl", function($scope, allEmails){
+  $scope.datepickerMinDate = new Date(2014, 1, 1);
+  $scope.datepickerMinDate = new Date();
   $scope.minDate = new Date(2014, 9, 1);
-  $scope.maxDate = new Date(2015, 10, 10);
+  $scope.maxDate = new Date();
 
   $scope.colors = [
     "skyblue",
@@ -258,5 +260,4 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
     return svg;
   }
-
 });
