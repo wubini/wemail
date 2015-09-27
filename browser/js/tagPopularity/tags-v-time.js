@@ -13,12 +13,20 @@ app.config(function ($stateProvider) {
 });
 
 app.controller("TagGraphCtrl", function($scope, allEmails){
-
   $scope.minDate = new Date(2014, 9, 1);
   $scope.maxDate = new Date(2015, 10, 10);
 
-  var svg = setUpGraph();
+  $scope.colors = [
+    "skyblue",
+    "limegreen",
+    "hotpink",
+    "purple",
+    "orange",
+    "darkblue"
+  ]
+
   var xScale, yScale;
+  var svg = setUpGraph();
 
   //this is done just once
   $scope.allEmails = allEmails.map((email) => {
@@ -40,29 +48,26 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
       dataset: dataset
     });
 
-    drawLine(dataset);
+    drawLine(dataset, $scope.colors[$scope.lineArray.length-1]);
   }
   //this is done for every search
   function strToArray(str){
     return str.split(" ");
   }
 
-  function drawLine(dataset){
+  function drawLine(dataset, color){
 
     console.log("drawing line for dataset", dataset);
     // draw line graph
 
     var line = d3.svg.line()
-        .x(function(d) {
-            return xScale(d.date);
-        })
-        .y(function(d) {
-            return yScale(d.freq);
-        });
+        .x(d => xScale(d.date))
+        .y(d => yScale(d.freq))
+        .interpolate('linear');
 
-    //console.log("d", line(dataset));
-
-    svg.append("svg:path").attr("d", line(dataset));
+    svg.append("svg:path")
+      .attr("d", line(dataset))
+      .attr("stroke", color);
 
     // plot circles
     svg.selectAll("circle")
@@ -157,7 +162,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
         .scale(xScale)
         .orient("bottom")
         .tickFormat(format)
-        .ticks(d3.time.days, 1);
+        .ticks(d3.time.weeks,5);
 
     svg.append("g")
         .attr("class", "axis x-axis")
@@ -168,7 +173,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left")
-        .tickFormat(function (d) { return d; })
+        .tickFormat(d => d)
         .tickSize(5, 5, 0)
         .ticks(5); // set rough # of ticks
 
