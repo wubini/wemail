@@ -14,6 +14,7 @@ function refresh(f) {
 var currentContent = null;
 
 var main = function(){
+  var collectEmails = false;
   console.log("Cool main");
   gmail = new Gmail();
   document.addEventListener('collectEmails', function(){
@@ -66,28 +67,32 @@ var main = function(){
 
   gmail.observe.on('send_message', function(){
     console.log("We hit save");
+
     if(collectEmails){
+      console.log("1. collecting emails");
       var email = arguments[2];
+      console.log("2. trying to show modal window...");
       gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',
       function onClickOK() {
-             var emailToSave = {
-               emailAddress: email.from,
-               subject: email.subject,
-               content: email.body.replace(/\<[^\>]*\>/g, "\n")
-             };
-             console.log('content', emailToSave.content);
-             emailToSave.content = emailToSave.content.replace(/[\n]+/g, "\n");
-             emailToSave.content = emailToSave.content.replace(/\u00a0/g, " ");
-             var modifyEmail = new CustomEvent("anonymize", {email:emailToSave.content});
-             document.dispatchEvent(modifyEmail);
-             console.log("save this email", emailToSave);
-             console.log("email content", emailToSave.content);
-             var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
-             document.dispatchEvent(triggerSave);
-             $('#gmailJsModalBackground').remove();
-             $('#gmailJsModalWindow').remove();
-           });
-    }else{
+         var emailToSave = {
+           emailAddress: email.from,
+           subject: email.subject,
+           content: email.body.replace(/\<[^\>]*\>/g, "\n")
+         };
+         console.log('content', emailToSave.content);
+         emailToSave.content = emailToSave.content.replace(/[\n]+/g, "\n");
+         emailToSave.content = emailToSave.content.replace(/\u00a0/g, " ");
+         var modifyEmail = new CustomEvent("anonymize", {email:emailToSave.content});
+         document.dispatchEvent(modifyEmail);
+         console.log("save this email", emailToSave);
+         console.log("email content", emailToSave.content);
+         var triggerSave = new CustomEvent('triggerSave',{detail: emailToSave});
+         document.dispatchEvent(triggerSave);
+         $('#gmailJsModalBackground').remove();
+         $('#gmailJsModalWindow').remove();
+      });
+    }
+    else {
       console.log("saving emails is turned off");
     }
   });
