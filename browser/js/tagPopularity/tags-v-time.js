@@ -28,7 +28,10 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
   ]
 
   var xScale, yScale, padding, width, height;
+<<<<<<< HEAD
+=======
   var maxY = 100;
+>>>>>>> 518c452513955d32f4481784747389f6f178b19d
   var svg = setUpGraph();
 
   //this is done just once
@@ -48,7 +51,10 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
       tags: tagsArray,
       dataset: dataset
     });
+<<<<<<< HEAD
+=======
 
+>>>>>>> 518c452513955d32f4481784747389f6f178b19d
     drawLines();
   }
   //this is done for every search
@@ -57,6 +63,10 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
   }
 
   function drawOneLine(dataset, color){
+<<<<<<< HEAD
+    console.log("drawing line for dataset", dataset);
+=======
+>>>>>>> 518c452513955d32f4481784747389f6f178b19d
     // draw line graph
 
     var line = d3.svg.line()
@@ -85,14 +95,24 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function drawLines(){
 
+<<<<<<< HEAD
+    d3.selectAll("path.line").remove();
+=======
     d3.select("svg").remove();
 
     svg = setUpGraph();
+>>>>>>> 518c452513955d32f4481784747389f6f178b19d
 
     xScale = d3.time.scale()
         .domain([$scope.minDate, $scope.maxDate])
         .range([padding, width - padding]);
 
+<<<<<<< HEAD
+    var maxY = _.max($scope.lineArray, line => {
+      return line.freq;
+    });
+
+=======
     // var l = $scope.lineArray[0];
     //
     // var maxOfL = _.max(l.dataset, point => {
@@ -113,6 +133,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
     maxY = _.max(maxesOfLines);
 
+>>>>>>> 518c452513955d32f4481784747389f6f178b19d
     yScale = d3.scale.linear()
         .domain([0, maxY])
         .range([height - padding, padding]);
@@ -180,9 +201,8 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function setUpGraph() {
 
-    width = 800;
-    height = 400;
-
+    width = 500;
+    height = 250;
     // Create the SVG 'canvas'
     var svg = d3.select(".graph-area")
         .append("svg")

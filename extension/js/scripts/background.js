@@ -5,6 +5,7 @@ var sendingEmails = false;
 
 bgApp.controller("BackgroundCtrl", function($scope, EmailFactory){
   chrome.runtime.onMessage.addListener(function(message){
+    console.log("bg got message", message)
     if(message.message==="createEmail")
     {
       EmailFactory.createNewEmail(message.newEmail)
