@@ -1,9 +1,21 @@
-<p>Number of Emails: {{allEmails.length}}</p>
-
-<p ng-repeat="line in lineArray"><span style="background-color:{{colors[$index]}}">**</span> {{line.tags}}</p>
-<form class="form-inline" role="form">
-  <div class="form-group">
-    <input type="text" class="form-control" id="search" ng-model="searchTags">
-    <button ng-click="addSearch(searchTags)">Add line</button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-5">
+      <p>How popular have tags been over time?</p>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <input type="text" class="form-control" id="search" ng-model="searchTags">
+          <button ng-click="addSearch(searchTags)">Add line</button>
+        </div>
+      </form>
+    </div>
   </div>
-</form>
+
+  <div class="row">
+    <div class="col-sm-8 graph-area">
+    </div>
+    <div class="col-sm-4 legend-area">
+      <h2 ng-show="lineArray.length">Key</h2>
+      <p ng-repeat="line in lineArray"><span style="background-color:{{colors[$index]}}; color: {{colors[$index]}}">***</span> {{line.tags.join(" ")}}</p>
+    </div>
+  </div>

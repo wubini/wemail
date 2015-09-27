@@ -25,7 +25,8 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
     "darkblue"
   ]
 
-  var xScale, yScale;
+  var xScale, yScale, padding, width, height;
+  var maxY = 100;
   var svg = setUpGraph();
 
   //this is done just once
@@ -38,9 +39,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
   $scope.lineArray = []; //an array of objects {tags:_, dataset: _}
 
   $scope.addSearch = (str) => {
-    console.log("adding search");
     var tagsArray = strToArray(str);
-    console.log("tagsArray", tagsArray);
     var filteredEmails = getFilteredEmails(tagsArray);
     var dataset = getDataSet(filteredEmails);
     $scope.lineArray.push({
@@ -48,16 +47,14 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
       dataset: dataset
     });
 
-    drawLine(dataset, $scope.colors[$scope.lineArray.length-1]);
+    drawLines();
   }
   //this is done for every search
   function strToArray(str){
     return str.split(" ");
   }
 
-  function drawLine(dataset, color){
-
-    console.log("drawing line for dataset", dataset);
+  function drawOneLine(dataset, color){
     // draw line graph
 
     var line = d3.svg.line()
@@ -82,6 +79,45 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
           return yScale(d.freq);
       })
       .attr("r", 5);
+  }
+
+  function drawLines(){
+
+    d3.select("svg").remove();
+
+    svg = setUpGraph();
+
+    xScale = d3.time.scale()
+        .domain([$scope.minDate, $scope.maxDate])
+        .range([padding, width - padding]);
+
+    // var l = $scope.lineArray[0];
+    //
+    // var maxOfL = _.max(l.dataset, point => {
+    //   return point.freq;
+    // }).freq;
+    //
+    // console.log("maxOfL", maxOfL);
+    // var maxY = _.max($scope.lineArray, line => {
+    //   var maxOfLine =  _.max(line.dataset, point => {
+    //     return point.freq;
+    //   });
+    //   return maxOfLine.freq;
+    // });
+
+    var maxesOfLines = $scope.lineArray.map(line => {
+      return _.max(line.dataset, point => point.freq).freq;
+    });
+
+    maxY = _.max(maxesOfLines);
+
+    yScale = d3.scale.linear()
+        .domain([0, maxY])
+        .range([height - padding, padding]);
+
+    $scope.lineArray.forEach((line, index)=> {
+      drawOneLine(line.dataset, $scope.colors[index]);
+    });
   }
 
   function getFilteredEmails(searchTagsArr){
@@ -114,6 +150,18 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
     var dataset = _.values(datasetObj);
 
+    for(var date = $scope.minDate; date<$scope.maxDate; date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1))
+    {
+      if(_.findIndex(dataset, (datapoint) => {
+        return datapoint.date===date;
+      })<0) {
+        dataset.push({
+          date: date,
+          freq: 0
+        })
+      }
+    }
+
     dataset.sort((a,b) => {
       if(a.date<b.date){
         return -1;
@@ -130,16 +178,16 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function setUpGraph() {
 
-    var width = 500;
-    var height = 250;
+    width = 800;
+    height = 400;
 
     // Create the SVG 'canvas'
-    var svg = d3.select("body")
+    var svg = d3.select(".graph-area")
         .append("svg")
         .attr("viewBox", "0 0 " + width + " " + height)
 
     // Define the padding around the graph
-    var padding = 50;
+    padding = 50;
 
     // Set the scales
     //var minDate = d3.min(dataset, function(d) { return d.date; });
@@ -152,7 +200,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
         .range([padding, width - padding]);
 
     yScale = d3.scale.linear()
-        .domain([0, 10])
+        .domain([0, maxY])
         .range([height - padding, padding]);
 
     // x-axis
@@ -181,6 +229,32 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
         .attr("class", "axis y-axis")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
+
+    //y-axis title
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - padding)
+        .attr("x",0 - (height / 2))
+        .attr("dx", "1em")
+        .style("text-anchor", "middle")
+        .text("Number of Emails");
+
+    //x-axis title
+    svg.append("text")
+        .attr("y", 0 + height)
+        .attr("x",0 + width/2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Date");
+
+    //graph title
+    svg.append("text")
+        .attr("y", 0)
+        .attr("x",0 - padding + width/2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "20px")
+        .text("Emails Sent Using Tags");
 
     return svg;
   }
