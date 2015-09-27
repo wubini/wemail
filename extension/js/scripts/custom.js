@@ -24,35 +24,41 @@ var main = function(){
     collectEmails = false;
   });
 
-  document.addEventListener('styledDraft', function(styledDraft){
-    console.log("in custom with styled draft", styledDraft.detail);
-    document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = styledDraft.detail;
+  document.addEventListener('highlightedDraft', function(e){
+    var highlightedHTML = e.detail;
+    console.log("in custom with styled draft", highlightedHTML);
+    document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = highlightedHTML;
   })
 
   console.log('Hello,', gmail.get.user_email())
-  gmail.observe.on('save_draft', function(){
-    var contents = arguments[2].body;
-    var draft = new CustomEvent('savedDraft', {detail: contents});
-    document.dispatchEvent(draft);
-    console.log("draft was saved", arguments);
-  });
+  // gmail.observe.on('save_draft', function(){
+  //   var contents = arguments[2].body;
+  //   var draft = new CustomEvent('savedDraft', {detail: contents});
+  //   document.dispatchEvent(draft);
+  //   console.log("draft was saved", arguments);
+  // });
 
 
   gmail.observe.on('compose', function(){
    names = [];
    var compose_ref = gmail.dom.composes()[0];
+   var mostRecentContentHTML = "";
+   var showingHighlights = false;
    var end = ["San Serif", "Serif", "Fixed Width", "Wide", "Narrow", "Comic Sans MS", "Garamond", "Georgia", "Tahoma", "Trebuchet MS", "Verdana"]
-   gmail.tools.add_compose_button(compose_ref, 'Anonymize', function() {
+   gmail.tools.add_compose_button(compose_ref, 'Highlight Names', function() {
        //var current = gmail.dom.composes()[0];
-
        var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
-       console.log("contentHTML", contentHTML);
-       //var email = current.$el[0].innerText.split("\n")
-       var text = [];
 
-       contentHTML = contentHTML.replace(/\<span[^\>]*\>/g,"").replace(/\<\/span[^\>]*\>/g,"");
+       showingHighlights = !showingHighlights;
+       if(showingHighlights) {
+         var addHighlights = new CustomEvent('addHighlights', {detail: contentHTML});
+         document.dispatchEvent(addHighlights);
+       }
+       else {
+         contentHTML = contentHTML.replace(/\<span[^\>]*\>/g,"").replace(/\<\/span[^\>]*\>/g,"");
+       }
+       console.log("updated contentHTML", contentHTML);
 
-      console.log("unstyled contentHTML", contentHTML);
        document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = contentHTML;
      }, 'mdl-button mdl-js-button mdl-button--accent');
  });
