@@ -38,7 +38,6 @@ app.controller("VolumeCtrl", function($scope, allEmails){
   // A formatter for counts.
   var formatCount = d3.format(",.0f");
 
-
   var x = d3.scale.linear()
       .domain([0, 24])
       .range([0, width]);

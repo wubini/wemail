@@ -2,6 +2,7 @@
 <form class="form-inline" role="form">
   <div class="form-group">
     <label for="search">Filter:</label>
-    <input type="text" class="form-control" id="search">
+    <input type="text" class="form-control" id="search" ng-model="searchTags">
+    <button ng-click="addSearch(searchTags)">Add line</button>
   </div>
 </form>
