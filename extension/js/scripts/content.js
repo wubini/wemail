@@ -12,7 +12,7 @@ s.src = chrome.extension.getURL('js/scripts/custom.js');
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     var button = document.createElement('button');
-    if(message.message==='sendEmailToBackend'){
+    if(message.message==='sendEmailsToBackend'){
           console.log("sendEmailToBackend");
           var sendEvent = new Event('collectEmails');
           document.dispatchEvent(sendEvent);

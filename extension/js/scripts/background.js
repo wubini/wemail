@@ -19,6 +19,7 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory){
           chrome.tabs.sendMessage(tab.id, {message: "sendEmailsToBackend"});
         });
     }else if(message.message === "doNotSendEmails"){
+      console.log("should not send email");
       sendingEmails = false;
       chrome.tabs.query({active:true}, function(arrayOfTabs){
         var tab = arrayOfTabs[0];
