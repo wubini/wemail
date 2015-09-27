@@ -46,10 +46,11 @@ var main = function(){
    var mostRecentContentHTML = "";
    var showingHighlights = false;
    var end = ["San Serif", "Serif", "Fixed Width", "Wide", "Narrow", "Comic Sans MS", "Garamond", "Georgia", "Tahoma", "Trebuchet MS", "Verdana"]
-   gmail.tools.add_compose_button(compose_ref, 'Highlight Names', function() {
+   gmail.tools.add_compose_button(compose_ref, '<div></div>', function() {
        //var current = gmail.dom.composes()[0];
+       this.classList.toggle("normal-wemail-button");
+       this.classList.toggle("green-wemail-button");
        var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
-
        showingHighlights = !showingHighlights;
        if(showingHighlights) {
          var addHighlights = new CustomEvent('addHighlights', {detail: contentHTML});
@@ -61,7 +62,7 @@ var main = function(){
        console.log("updated contentHTML", contentHTML);
 
        document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = contentHTML;
-     }, 'mdl-button mdl-js-button mdl-button--accent');
+     }, 'mdl-button mdl-js-button mdl-button--accent normal-wemail-button');
  });
 
 
