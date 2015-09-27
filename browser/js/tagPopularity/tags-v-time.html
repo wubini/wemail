@@ -1,7 +1,8 @@
 <p>Number of Emails: {{allEmails.length}}</p>
+
+<p ng-repeat="line in lineArray"><span style="background-color:{{colors[$index]}}">**</span> {{line.tags}}</p>
 <form class="form-inline" role="form">
   <div class="form-group">
-    <label for="search">Filter:</label>
     <input type="text" class="form-control" id="search" ng-model="searchTags">
     <button ng-click="addSearch(searchTags)">Add line</button>
   </div>
