@@ -44,3 +44,13 @@ body {
   font-size: 21px;
   padding-top: 40px;
 }
+
+.green-wemail-button {
+  background-image: url('https://www.google.com/logos/doodles/2015/google-gameday-doodle-3-5938879964119040-res.png') !important;
+  background-color: "limegreen";
+}
+
+.normal-wemail-button {
+  background-image: url('http://www.bottlecap-jewelry.com/cos/etsy_tiny_banner02.jpg') !important;
+  background-color: "blue";
+}
