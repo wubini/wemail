@@ -13,14 +13,15 @@ app.config(function ($stateProvider) {
 });
 
 app.controller("TagGraphCtrl", function($scope, allEmails){
-  $scope.datepickerMinDate = new Date(2014, 1, 1);
-  $scope.datepickerMinDate = new Date();
-  $scope.minDate = new Date(2014, 9, 1);
+
+  $scope.absMinDate = new Date(2014, 1, 1);
+  $scope.absMaxDate = new Date();
+  $scope.minDate = new Date(2014, 10, 1);
   $scope.maxDate = new Date();
 
   $scope.colors = [
     "skyblue",
-    "limegreen",
+    "forestgreen",
     "hotpink",
     "purple",
     "orange",
@@ -42,13 +43,15 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
   $scope.lineArray = []; //an array of objects {tags:_, dataset: _}
 
   $scope.addSearch = (str) => {
-    var tagsArray = strToArray(str);
-    var filteredEmails = getFilteredEmails(tagsArray);
-    var dataset = getDataSet(filteredEmails);
-    $scope.lineArray.push({
-      tags: tagsArray,
-      dataset: dataset
-    });
+    if(str){
+      var tagsArray = strToArray(str);
+      var filteredEmails = getFilteredEmails(tagsArray);
+      var dataset = getDataSet(filteredEmails);
+      $scope.lineArray.push({
+        tags: tagsArray,
+        dataset: dataset
+      });
+    }
     drawLines();
   }
   //this is done for every search
@@ -58,7 +61,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function drawOneLine(dataset, color){
 
-    console.log("drawing line for dataset", dataset);
+    //console.log("drawing line for dataset", dataset);
 
     // draw line graph
 
@@ -67,33 +70,37 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
         .y(d => yScale(d.freq))
         .interpolate('linear');
 
+    var timeboundDataset = dataset.filter(point => {
+      return point.date>=$scope.minDate && point.date<=$scope.maxDate;
+    });
+
+    console.log("timebound dataset", timeboundDataset);
+
     svg.append("svg:path")
-      .attr("d", line(dataset))
+      .attr("d", line(timeboundDataset))
       .attr("stroke", color);
 
     // plot circles
-    svg.selectAll("circle")
-      .data(dataset)
-      .enter()
-      .append("circle")
-      .attr("class", "data-point")
-      .attr("cx", function(d) {
-          return xScale(d.date);
-      })
-      .attr("cy", function(d) {
-          return yScale(d.freq);
-      })
-      .attr("r", 5);
+    // svg.selectAll("circle")
+    //   .data(dataset)
+    //   .enter()
+    //   .append("circle")
+    //   .attr("class", "data-point")
+    //   .attr("cx", function(d) {
+    //       return xScale(d.date);
+    //   })
+    //   .attr("cy", function(d) {
+    //       return yScale(d.freq);
+    //   })
+    //   .attr("r", 5);
   }
 
   function drawLines(){
-
 
     d3.selectAll("path.line").remove();
 
     d3.select("svg").remove();
 
-    svg = setUpGraph();
 
 
     xScale = d3.time.scale()
@@ -101,10 +108,9 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
         .range([padding, width - padding]);
 
 
-    var maxY = _.max($scope.lineArray, line => {
-      return line.freq;
-    });
-
+    // var maxY = _.max($scope.lineArray, line => {
+    //   return line.freq;
+    // });
 
     // var l = $scope.lineArray[0];
     //
@@ -126,10 +132,13 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
     maxY = _.max(maxesOfLines);
 
+    console.log("maxY", maxY);
 
     yScale = d3.scale.linear()
         .domain([0, maxY])
         .range([height - padding, padding]);
+
+    svg = setUpGraph();
 
     $scope.lineArray.forEach((line, index)=> {
       drawOneLine(line.dataset, $scope.colors[index]);
@@ -166,7 +175,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
     var dataset = _.values(datasetObj);
 
-    for(var date = $scope.minDate; date<$scope.maxDate; date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1))
+    for(var date = $scope.absMinDate; date<$scope.absMaxDate; date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1))
     {
       if(_.findIndex(dataset, (datapoint) => {
         return datapoint.date===date;
@@ -194,8 +203,8 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function setUpGraph() {
 
-    width = 500;
-    height = 250;
+    width = 800;
+    height = 400;
     // Create the SVG 'canvas'
     var svg = d3.select(".graph-area")
         .append("svg")

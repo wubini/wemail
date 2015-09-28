@@ -1,29 +1,52 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-7 col-sm-offset-3">
+      <h3>How popular have tags been over time?</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+
       <div class="row">
-        <p>How popular have tags been over time?</p>
+        <div style="display:inline-block; min-height:200px;">
+          <h5>Start Date</h5>
+          <date-picker dt="minDate"></date-picker>
+          <h5>End Date</h5>
+          <date-picker dt="maxDate"></date-picker>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <form class="form-inline" role="form">
-      <div class="form-group">
-        <input type="text" class="form-control" id="search" ng-model="searchTags">
-        <button class="btn btn-default" ng-click="addSearch(searchTags)">Add line</button>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input type="text" class="form-control" id="search" ng-model="searchTags">
+              <button class="btn btn-default" ng-click="addSearch(searchTags)">Plot tag usage</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
-  </div>
+      <br>
 
-  <div class="row">
-    <div class="col-sm-8 graph-area">
+      <div class="row">
+        <div class="col-sm-12 graph-area">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-5 legend-area">
+            <h4 ng-show="lineArray.length">Key</h4>
+            <p ng-repeat="line in lineArray"><span style="background-color:{{colors[$index]}}; color: {{colors[$index]}}">***</span> {{line.tags.join(" ")}}</p>
+        </div>
+      </div>
+
     </div>
-    <div class="col-sm-4 legend-area">
-      <h2 ng-show="lineArray.length">Key</h2>
-      <p ng-repeat="line in lineArray"><span style="background-color:{{colors[$index]}}; color: {{colors[$index]}}">***</span> {{line.tags.join(" ")}}</p>
-    </div>
+
   </div>
 
 </div>
