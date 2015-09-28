@@ -4,14 +4,14 @@ var sendingEmails = false;
 
 
 bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
-  $http.get('http://127.0.0.1:1337/api/names')
+  $http.get('https://shielded-forest-2803.herokuapp.com/api/names')
   .then(function(response) {
     $scope.allNames = response.data;
     console.log($scope.allNames.A);
-  })
-  //.then(null, console.error.bind(console));
+})
 
-  chrome.runtime.onMessage.addListener(function(message){
+
+chrome.runtime.onMessage.addListener(function(message){
     if(message.message==="addHighlights")
     {
       var draft = message.unhighlighted;
@@ -19,7 +19,6 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
       while ( (result = regex.exec(draft)) ) {
           capitalizedWords.push({word: result[0], index: result.index});
       }
-
       capitalizedWords = capitalizedWords.map(function(capitalizedWord){
         var nameArray = $scope.allNames[capitalizedWord.word[0]];
         capitalizedWord.oldWord = capitalizedWord.word;
@@ -45,8 +44,9 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
         var tab = arrayOfTabs[0];
         chrome.tabs.sendMessage(tab.id, {message: "highlightedDraft", highlightedDraft: draft})
       });
-
     }
+
+
     if(message.message==="createEmail")
     {
       var email = message.newEmail.content;
@@ -83,6 +83,7 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
         console.log("created new email: ", createdEmail);
       });
     }
+
     else if(message.message === "savedDraft"){
       var draft = message.savedDraft;
 
@@ -117,6 +118,7 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
         chrome.tabs.sendMessage(tab.id, {message: "styledDraft", styledDraft: draft})
       });
     }
+
     else if(message.message === "sendEmails"){
         console.log("should send email.");
         sendingEmails = true;
@@ -124,24 +126,33 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
           var tab = arrayOfTabs[0];
           chrome.tabs.sendMessage(tab.id, {message: "sendEmailsToBackend"});
         });
-    }else if(message.message === "doNotSendEmails"){
+    }
+
+
+    else if(message.message === "doNotSendEmails"){
       console.log("should not send email");
       sendingEmails = false;
       chrome.tabs.query({active:true}, function(arrayOfTabs){
         var tab = arrayOfTabs[0];
         chrome.tabs.sendMessage(tab.id, {message: "doNotSendEmailsToBackend"})
       });
-    }else if(message.message === "emailContent"){
+    }
+
+
+    else if(message.message === "emailContent"){
         console.log("Email content ", message.emailContent);
         emails.push(message.emailContent);
         console.log(emails);
-    }else if(message.message === "getEmails"){
+    }
+
+
+    else if(message.message === "getEmails"){
         console.log(emails);
         chrome.runtime.sendMessage({message:"updatedEmails", emails: emails})
-    }else if(message.message === "extensionStatus"){
-      chrome.runtime.sendMessage({message:"status", status: sendingEmails})
-    }else if(message.message === "anonymize"){
+    }
 
+    else if(message.message === "extensionStatus"){
+      chrome.runtime.sendMessage({message:"status", status: sendingEmails})
     }
   });
 });
@@ -149,13 +160,13 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
 bgApp.factory("EmailFactory", function($http){
   factory = {};
   factory.getAll = function (){
-    return $http.get("http://127.0.0.1:1337/api/emails").then(function(response){
+    return $http.get("https://shielded-forest-2803.herokuapp.com/api/emails").then(function(response){
       return response.data;
     })
   }
 
   factory.createNewEmail = function (newEmail){
-    return $http.post("http://127.0.0.1:1337/api/emails", newEmail).then(function(response){
+    return $http.post("https://shielded-forest-2803.herokuapp.com/api/emails", newEmail).then(function(response){
       return response.data;
     })
   }

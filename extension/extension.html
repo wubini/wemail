@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 		<script src="/js/dependencies/angular.min.js"></script>
 		<script src="/js/dependencies/angular-ui-router.min.js"></script>
+		<script src = "/js/dependencies/jquery-1.11.3.min.js"></script>
 		<script src="/js/dependencies/ui-bootstrap.min.js"></script>
 	  <script src="/js/scripts/app/main.js"></script>
 	</head>
@@ -17,7 +18,7 @@
 		  <header class="mdl-layout__header">
 		    <div class="mdl-layout__header-row">
 		      <span class="mdl-layout-title">
-		        <img class="android-logo-image" style = "width: 100px" src="/assets/logo.png">
+		        <img id = "hImage" class="android-logo-image" style = "width: 100px" src="/assets/logo.png">
 		        WeMail
 		      </span>
 		    </div>
@@ -29,12 +30,12 @@
 						<div class="android-font android-slogan">welcome to WeMail</div>
 						<div class="android-font android-sub-slogan">read and share emails with the world</div>
 						<button class="mdl-button mdl-js-button mdl-button--accent md-48 spaceButton" ng-if = "activated" ng-click = "deactivate()">
-							<h4>Turn On</h4>
-							<i class="material-icons md-48">power_settings_new</i>
-						</button>
-						<button class="mdl-button mdl-js-button mdl-button--accent spaceButton" ng-if = "!activated" ng-click = "activate()">
 							<h4 style = "color:red">Turn Off</h4>
 							<i class="material-icons md-48 red">power_settings_new</i>
+						</button>
+						<button class="mdl-button mdl-js-button mdl-button--accent spaceButton" ng-if = "!activated" ng-click = "activate()">
+							<h4>Turn On</h4>
+							<i class="material-icons md-48">power_settings_new</i>
 						</button>
 					</div>
 				</div>

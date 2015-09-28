@@ -1,7 +1,5 @@
 var gmail;
 
-var names = [];
-
 function refresh(f) {
   if( typeof Gmail === "undefined") {
     console.log("Gmail undefined");
@@ -19,10 +17,12 @@ var main = function(){
   gmail = new Gmail();
   document.addEventListener('collectEmails', function(){
     collectEmails = true;
+    $("#icon").attr("src", "https://i.imgur.com/Zom1i7L.png");
     console.log(collectEmails);
   });
   document.addEventListener('doNotCollectEmails', function(){
     collectEmails = false;
+    $("#icon").attr("src","https://i.imgur.com/uc6ktOc.png");
   });
 
   document.addEventListener('highlightedDraft', function(e){
@@ -41,15 +41,15 @@ var main = function(){
 
 
   gmail.observe.on('compose', function(){
-   names = [];
    var compose_ref = gmail.dom.composes()[0];
-   var mostRecentContentHTML = "";
    var showingHighlights = false;
-   var end = ["San Serif", "Serif", "Fixed Width", "Wide", "Narrow", "Comic Sans MS", "Garamond", "Georgia", "Tahoma", "Trebuchet MS", "Verdana"]
-   gmail.tools.add_compose_button(compose_ref, '<div></div>', function() {
-       //var current = gmail.dom.composes()[0];
-       this.classList.toggle("normal-wemail-button");
-       this.classList.toggle("green-wemail-button");
+   var src = ""
+   if(collectEmails){
+     src = "http://i.imgur.com/Zom1i7L.png";
+   }else{
+     src = "http://i.imgur.com/uc6ktOc.png";
+   }
+   gmail.tools.add_compose_button(compose_ref, '<div><img id = "icon" style = "width: 60px;height:50px;vertical-align: middle" src = "http://i.imgur.com/uc6ktOc.png";></img></div>', function() {
        var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
        showingHighlights = !showingHighlights;
        if(showingHighlights) {

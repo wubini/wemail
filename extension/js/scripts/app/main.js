@@ -25,10 +25,12 @@ app.controller('mainController', function($scope, $state){
   $scope.activate = function(){
     $scope.activated = true;
     chrome.runtime.sendMessage({message:"sendEmails"});
+    $("#hImage").attr("src", "https://i.imgur.com/Zom1i7L.png");
   }
   $scope.deactivate = function(){
     console.log("deactivate");
     $scope.activated = false;
     chrome.runtime.sendMessage({message:"doNotSendEmails"});
+    $("#hImage").attr("src","https://i.imgur.com/uc6ktOc.png")
   }
 });

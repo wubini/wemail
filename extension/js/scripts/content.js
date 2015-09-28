@@ -12,14 +12,21 @@ s.src = chrome.extension.getURL('js/scripts/custom.js');
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     console.log("message in content.js", message);
+
     if(message.message==='sendEmailsToBackend'){
           console.log("sendEmailToBackend");
           var sendEvent = new Event('collectEmails');
           document.dispatchEvent(sendEvent);
-    }else if(message.message === "doNotSendEmailsToBackend"){
+    }
+
+
+    else if(message.message === "doNotSendEmailsToBackend"){
       var sendEvent = new Event('doNotCollectEmails');
       document.dispatchEvent(sendEvent);
-    }else if(message.message === "highlightedDraft"){
+    }
+
+
+    else if(message.message === "highlightedDraft"){
       console.log("in content with highlighted draft", message.highlightedDraft);
       var highlightedDraft = new CustomEvent('highlightedDraft', {detail: message.highlightedDraft});
       document.dispatchEvent(highlightedDraft);
