@@ -3,20 +3,37 @@
 
 body {
  min-width: 400px;
- min-height: 400px;
 }
 
 .android-be-together-section {
   position: relative;
-  height: 400px;
+  height: 500px;
   width: auto;
   background-color: #f3f3f3;
   /*// background: url('assets/homeGlobal.jpg') center 30% no-repeat;*/
   background-size: cover;
 }
+
+
+.material-icons.red {
+  color: #FF0000;
+}
+
+.spaceButton {
+  padding-top: 40px;
+}
+
+.material-icons.md-48 {
+  font-size: 48px;
+  overflow: visible !important;
+}
+.mdl-button {
+  overflow: visible;
+}
+
 .android-slogan {
   font-size: 60px;
-  padding-top: 50px;
+  padding-top: 80px;
 }
 .android-font {
   font-family: 'And Black', 'Helvetica', 'Arial', sans-serif;
@@ -27,7 +44,7 @@ body {
 
 .android-sub-slogan {
   font-size: 21px;
-  padding-top: 24px;
+  padding-top: 40px;
 }
 
 .green-wemail-button {

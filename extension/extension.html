@@ -26,14 +26,15 @@
 				<div class="android-content mdl-layout__content" ui-view>
 					<a name="top"></a>
 					<div class="android-be-together-section mdl-typography--text-center">
-						<div class="android-font android-slogan">read emails from around the world.</div>
-						<div class="android-font android-sub-slogan">welcome to WeMail... a platform that reveals patterns in the world's email</div>
-						<br>
-						<button class="mdl-button mdl-js-button mdl-button--accent" ng-if = "activated" ng-click = "deactivate()">
-							Turn Off
+						<div class="android-font android-slogan">welcome to WeMail</div>
+						<div class="android-font android-sub-slogan">read and share emails with the world</div>
+						<button class="mdl-button mdl-js-button mdl-button--accent md-48 spaceButton" ng-if = "activated" ng-click = "deactivate()">
+							<h4>Turn On</h4>
+							<i class="material-icons md-48">power_settings_new</i>
 						</button>
-						<button class="mdl-button mdl-js-button mdl-button--accent" ng-if = "!activated" ng-click = "activate()">
-							Turn On
+						<button class="mdl-button mdl-js-button mdl-button--accent spaceButton" ng-if = "!activated" ng-click = "activate()">
+							<h4 style = "color:red">Turn Off</h4>
+							<i class="material-icons md-48 red">power_settings_new</i>
 						</button>
 					</div>
 				</div>
