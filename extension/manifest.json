@@ -1,6 +1,6 @@
 {
-  "name": "The Emails of Others",
-  "description": "An application that allows users to send emails to a central repo and in turn access other people's emails",
+  "name": "WeMail",
+  "description": "Read everyone's emails and let them read yours",
   "manifest_version": 2,
   "background": {
     "page": "background.html",
