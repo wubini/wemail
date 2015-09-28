@@ -31,6 +31,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
       var highlightedDraft = new CustomEvent('highlightedDraft', {detail: message.highlightedDraft});
       document.dispatchEvent(highlightedDraft);
     }
+
+    else if(message.message === "currentStatus"){
+      var currentStatus = new CustomEvent("currentStatus", {detail: message.currentStatus})
+      document.dispatchEvent(currentStatus);
+    }
 })
 
 document.addEventListener('triggerSave', function(e){
@@ -52,3 +57,7 @@ document.addEventListener('addHighlights', function(e){
   console.log("content got unhighlighted version", contentHTML);
   chrome.runtime.sendMessage({message: 'addHighlights', unhighlighted: contentHTML});
 })
+
+document.addEventListener('getCurrentStatus', function(){
+  chrome.runtime.sendMessage({message: 'getCurrentStatus'});
+});

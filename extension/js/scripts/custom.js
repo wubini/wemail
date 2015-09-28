@@ -31,6 +31,10 @@ var main = function(){
     document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = highlightedHTML;
   })
 
+  document.addEventListener('currentStatus', function(e){
+    console.log("CurrentStatus in custom ", e.detail);
+    collectEmails = e.detail;
+  })
   console.log('Hello,', gmail.get.user_email())
   // gmail.observe.on('save_draft', function(){
   //   var contents = arguments[2].body;
@@ -41,6 +45,9 @@ var main = function(){
 
 
   gmail.observe.on('compose', function(){
+
+   var status = new Event("getCurrentStatus");
+   document.dispatchEvent(status);
    var compose_ref = gmail.dom.composes()[0];
    var showingHighlights = false;
    var src = ""

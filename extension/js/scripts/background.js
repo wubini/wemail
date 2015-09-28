@@ -154,6 +154,13 @@ chrome.runtime.onMessage.addListener(function(message){
     else if(message.message === "extensionStatus"){
       chrome.runtime.sendMessage({message:"status", status: sendingEmails})
     }
+
+    else if(message.message === "getCurrentStatus"){
+      chrome.tabs.query({active:true}, function(arrayOfTabs){
+        var tab = arrayOfTabs[0];
+        chrome.tabs.sendMessage(tab.id, {message: "currentStatus", currentStatus: sendingEmails})
+      });
+    }
   });
 });
 
