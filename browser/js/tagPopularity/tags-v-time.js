@@ -13,8 +13,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller("TagGraphCtrl", function($scope, allEmails){
-  $scope.datepickerMinDate = new Date(2014, 1, 1);
-  $scope.datepickerMinDate = new Date();
+
   $scope.minDate = new Date(2014, 9, 1);
   $scope.maxDate = new Date();
 
@@ -194,8 +193,8 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   function setUpGraph() {
 
-    width = 500;
-    height = 250;
+    width = 800;
+    height = 400;
     // Create the SVG 'canvas'
     var svg = d3.select(".graph-area")
         .append("svg")
