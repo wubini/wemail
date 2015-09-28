@@ -1,5 +1,17 @@
-<div>
-  See Emails
-
-    All emails {{allEmails}}
+<div class = "mdl-grid">
+  <div class = "container">
+    <div class = "row">
+      <div class = "row">
+        <div class = "col-md-12">
+          <h4 class = "android-font">Search</h4>
+        </div>
+      </div>
+      <div class = "row">
+        <search-form></search-form>
+      </div>
+    </div>
+    <div class = "row">
+      <email class = "mdl-cell mdl-cell--4-col" ng-repeat = "email in allEmails | filter:search"></email>
+    </div>
+  </div>
 </div>
