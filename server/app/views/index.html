@@ -7,6 +7,7 @@
       <link rel="stylesheet" type="text/css" href="/style.css" />
       <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-red.min.css" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
       <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
       <script src="/lodash/index.js"></script>
       <script src="/angular/angular.js"></script>
@@ -29,45 +30,18 @@
       </style>
   </head>
   <body ng-app="FrontPageApp">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ui-view>
-      <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-        <div class="mdl-layout__header-row">
-          <span class="android-title mdl-layout-title">
-            <img class="android-logo-image" src="/assets/logo.png">
-          </span>
-          <!-- Add spacer, to align navigation to the right in desktop -->
-          <div class="android-header-spacer mdl-layout-spacer"></div>
-          <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search-field" />
-            </div>
-          </div>
-          <!-- Navigation -->
-          <div class="android-navigation-container">
-            <nav class="android-navigation mdl-navigation">
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" ui-sref="signUp">Sign Up</a>
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" ui-sref = "seeEmails">See Emails</a>
-                <a class="mdl-navigation__link mdl-typography--text-uppercase" ui-sref = "charts">Play with data</a>
-            </nav>
-          </div>
-        </div>
-      </div>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-      <div class="android-content mdl-layout__content">
+      <nav-bar></nav-bar>
+
+      <div class="android-content mdl-layout__content" ui-view>
         <a name="top"></a>
+
         <div class="android-be-together-section mdl-typography--text-center">
           <div class="android-font android-slogan">read emails from around the world.</div>
           <div class="android-font android-sub-slogan">welcome to WeMail... a platform that reveals patterns in the world's email</div>
-
-          <!-- <a href="#about">
-            <button class="android-fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-              <i class="material-icons">expand_more</i>
-            </button>
-          </a> -->
         </div>
+
         <div class="android-wear-section">
           <div class="android-wear-band">
             <div class="android-wear-band-text">
@@ -83,7 +57,9 @@
             </div>
           </div>
         </div>
+
         <footer class="android-footer mdl-mega-footer">
+
           <div class="mdl-mega-footer--top-section">
             <div class="mdl-mega-footer--left-section">
               <button class="mdl-mega-footer--social-btn"></button>
@@ -100,13 +76,19 @@
           </div>
 
           <div class="mdl-mega-footer--bottom-section">
+            <a class="android-link mdl-typography--font-light" href="https://github.com/warsucks/dotheylikeme">Project</a>
             <a class="android-link mdl-typography--font-light" href="https://github.com/aneurycasado">Aneury Casado</a>
             <a class="android-link mdl-typography--font-light" href="https://github.com/warsucks">Kathy Lu</a>
           </div>
 
         </footer>
+
       </div>
+
     </div>
+
     <a href="https://github.com/google/material-design-lite/blob/master/templates/android-dot-com/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">Get the Extension</a>
+
   </body>
+
 </html>
