@@ -11,7 +11,7 @@ body {
   height: 400px;
   width: auto;
   background-color: #f3f3f3;
-  // background: url('assets/homeGlobal.jpg') center 30% no-repeat;
+  /*// background: url('assets/homeGlobal.jpg') center 30% no-repeat;*/
   background-size: cover;
 }
 .android-slogan {
@@ -31,11 +31,11 @@ body {
 }
 
 .green-wemail-button {
-  background-image: url('https://www.google.com/logos/doodles/2015/google-gameday-doodle-3-5938879964119040-res.png') !important;
+  /*background-image: url('https://www.google.com/logos/doodles/2015/google-gameday-doodle-3-5938879964119040-res.png') !important;*/
   background-color: "limegreen";
 }
 
 .normal-wemail-button {
-  background-image: url('http://www.bottlecap-jewelry.com/cos/etsy_tiny_banner02.jpg') !important;
+  /*background-image: url('http://www.bottlecap-jewelry.com/cos/etsy_tiny_banner02.jpg') !important;*/
   background-color: "blue";
 }
