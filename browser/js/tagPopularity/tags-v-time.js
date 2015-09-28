@@ -16,7 +16,7 @@ app.controller("TagGraphCtrl", function($scope, allEmails){
 
   $scope.absMinDate = new Date(2014, 1, 1);
   $scope.absMaxDate = new Date();
-  $scope.minDate = new Date(2014, 10, 1);
+  $scope.minDate = new Date(2015, 2, 1);
   $scope.maxDate = new Date();
 
   $scope.colors = [
