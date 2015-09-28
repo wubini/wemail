@@ -16,11 +16,11 @@ app.controller("VolumeCtrl", function($scope, allEmails){
   console.log("in volume ctrl")
   $scope.allEmails = allEmails;
 
-  var margin = {top: 10, right: 30, bottom: 30, left: 30},
+  var margin = {top: 30, right: 40, bottom: 30, left: 40},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-  var svg = d3.select("ui-view").append("svg")
+  var svg = d3.select(".bargraph").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -47,8 +47,10 @@ app.controller("VolumeCtrl", function($scope, allEmails){
       .bins(x.ticks(24))
       (values);
 
+      console.log("data", data);
+
   var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return d.y; })])
+      .domain([0, d3.max(data, d => d.y)])
       .range([height-50, 0]);
 
   var xAxis = d3.svg.axis()
@@ -72,12 +74,12 @@ app.controller("VolumeCtrl", function($scope, allEmails){
       .attr("height", function(d) { return height - y(d.y); });
 
   //text on each bar
-  bar.append("text")
-      .attr("dy", ".75em")
-      .attr("y", 6)
-      .attr("x", x(data[0].dx) / 2)
-      .attr("text-anchor", "middle")
-      .text(function(d) { return formatCount(d.y); });
+  // bar.append("text")
+  //     .attr("dy", ".75em")
+  //     .attr("y", 6)
+  //     .attr("x", x(data[0].dx) / 2)
+  //     .attr("text-anchor", "middle")
+  //     .text(function(d) { return formatCount(d.y); });
 
   //y-axis title
   svg.append("text")
