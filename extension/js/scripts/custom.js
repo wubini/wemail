@@ -9,24 +9,23 @@ function refresh(f) {
 }
 
 var main = function(){
-  var collectEmails = false;
+  var sendEmails = false;
   var showingHighlights = false;
   gmail = new Gmail();
 
-  var getCurrentStatus = new Event("getCurrentStatus");
-  document.dispatchEvent(getCurrentStatus);
+  document.dispatchEvent(new Event("getCurrentStatus"));
 
   document.addEventListener('currentStatus', function(e){
-    collectEmails = e.detail;
+    sendEmails = e.detail;
   });
 
-  document.addEventListener('collectEmails', function(){
-    collectEmails = true;
+  document.addEventListener('sendEmails', function(){
+    sendEmails = true;
     $("#toggleDiv").css("display","inline");
   });
 
-  document.addEventListener('doNotCollectEmails', function(){
-    collectEmails = false;
+  document.addEventListener('doNotSendEmails', function(){
+    sendEmails = false;
     $("#toggleDiv").css("display","none");
   });
 
@@ -60,7 +59,7 @@ var main = function(){
        }
 
      }, 'mdl-button mdl-js-button mdl-button--accent');
-     if(collectEmails){
+     if(sendEmails){
        $('#toggleDiv').css('display', 'inline');
      }
      else{
@@ -76,7 +75,7 @@ var main = function(){
 
   gmail.observe.on('send_message', function(){
 
-    if(collectEmails){
+    if(sendEmails){
       var email = arguments[2];
 
       gmail.tools.add_modal_window('Share your email', 'Why not share your email with the world?',

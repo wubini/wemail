@@ -2,149 +2,34 @@ var bgApp = angular.module("BackgroundApp", [])
 
 var sendingEmails = false;
 
-bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
+bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, ContentFactory, $http){
   $http.get('https://shielded-forest-2803.herokuapp.com/api/names')
   .then(function(response) {
     $scope.allNames = response.data;
   })
 
   chrome.runtime.onMessage.addListener(function(message){
-    if(message.message==="addHighlights")
-    {
-      var draft = message.unhighlighted;
-      var regex = /[A-Z]\w*/g, result, capitalizedWords= [];
-      while ( (result = regex.exec(draft)) ) {
-          capitalizedWords.push({word: result[0], index: result.index});
-      }
-      capitalizedWords = capitalizedWords.map(function(capitalizedWord){
-        var nameArray = $scope.allNames[capitalizedWord.word[0]];
-        capitalizedWord.oldWord = capitalizedWord.word;
-        console.log(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7));
-        if(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7)!=="</span>" && nameArray.indexOf(capitalizedWord.word)>-1){
-          capitalizedWord.word = "<span style='background-color:limegreen;'>"+capitalizedWord.word+"</span>";
-        }
-        return capitalizedWord;
-      });
 
-      console.log("styled text", capitalizedWords);
-
-      for (var i = capitalizedWords.length -1; i>=0; i--)
-      {
-        var capitalizedWord = capitalizedWords[i];
-        console.log("inserting styled capitalizedWord", capitalizedWord);
-        var firstPart = draft.slice(0, capitalizedWord.index);
-        var secondPart = draft.slice(capitalizedWord.index + capitalizedWord.oldWord.length);
-        draft = firstPart + capitalizedWord.word + secondPart;
-      }
-      console.log("background highlighted Draft", draft);
-      chrome.tabs.query({active:true}, function(arrayOfTabs){
-        var tab = arrayOfTabs[0];
-        chrome.tabs.sendMessage(tab.id, {message: "highlightedDraft", highlightedDraft: draft})
-      });
+    if(message.message === "sendEmails"){
+      sendingEmails = true;
+      sendMessageFromTab({message: "sendEmails"});
     }
 
-    if(message.message==="createEmail")
-    {
-      var email = message.newEmail.content;
-      var regex = /[A-Z]\w*/g, result, capitalizedWords = [];
-      while ( (result = regex.exec(email)) ) {
-          capitalizedWords.push({word: result[0], index: result.index});
-      }
+    else if(message.message === "doNotSendEmails"){
+      sendingEmails = false;
+      sendMessageFromTab({message: "doNotSendEmails"});
+    }
 
-      capitalizedWords = capitalizedWords.map(function(capitalizedWord){
-        var nameArray = $scope.allNames[capitalizedWord.word[0]];
-        capitalizedWord.oldWord = capitalizedWord.word;
-        if(nameArray.indexOf(capitalizedWord.word)>-1){
-          capitalizedWord.word = capitalizedWord.word[0];
-        }
-        return capitalizedWord;
-      });
-
-      for (var i = capitalizedWords.length -1; i>=0; i--)
-      {
-        var capitalizedWord = capitalizedWords[i];
-        console.log("inserting anonymized capitalizedWord", capitalizedWord);
-        var firstPart = email.slice(0, capitalizedWord.index);
-        var secondPart = email.slice(capitalizedWord.index + capitalizedWord.oldWord.length);
-        email = firstPart + capitalizedWord.word + secondPart;
-      }
+    else if(message.message==="createEmail") {
+      var beforeContent = message.newEmail.content;
+      var afterContent = ContentFactory.transformPeopleNames(beforeContent, $scope.allNames, ContentFactory.anonymizeName);
 
       var emailToSave = {
-        content: email,
+        content: afterContent,
         subject: message.newEmail.subject
       }
 
-      EmailFactory.createNewEmail(emailToSave)
-      .then(function(createdEmail){
-        console.log("created new email: ", createdEmail);
-      });
-    }
-
-    else if(message.message === "savedDraft"){
-      var draft = message.savedDraft;
-
-      var regex = /[A-Z]\w*/g, result, capitalizedWords= [];
-      while ( (result = regex.exec(draft)) ) {
-          capitalizedWords.push({word: result[0], index: result.index});
-      }
-
-      capitalizedWords = capitalizedWords.map(function(capitalizedWord){
-        var nameArray = $scope.allNames[capitalizedWord.word[0]];
-        capitalizedWord.oldWord = capitalizedWord.word;
-        console.log(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7));
-        if(draft.slice(capitalizedWord.index + capitalizedWord.word.length, 7)!=="</span>" && nameArray.indexOf(capitalizedWord.word)>-1){
-          capitalizedWord.word = "<span style='background-color:limegreen;'>"+capitalizedWord.word+"</span>";
-        }
-        return capitalizedWord;
-      });
-
-      console.log("styled text", capitalizedWords);
-
-      for (var i = capitalizedWords.length -1; i>=0; i--)
-      {
-        var capitalizedWord = capitalizedWords[i];
-        console.log("inserting styled capitalizedWord", capitalizedWord);
-        var firstPart = draft.slice(0, capitalizedWord.index);
-        var secondPart = draft.slice(capitalizedWord.index + capitalizedWord.oldWord.length);
-        draft = firstPart + capitalizedWord.word + secondPart;
-      }
-      console.log("background styledDraft", draft);
-      chrome.tabs.query({active:true}, function(arrayOfTabs){
-        var tab = arrayOfTabs[0];
-        chrome.tabs.sendMessage(tab.id, {message: "styledDraft", styledDraft: draft})
-      });
-    }
-
-    else if(message.message === "sendEmails"){
-        console.log("should send email.");
-        sendingEmails = true;
-        chrome.tabs.query({active:true}, function(arrayOfTabs){
-          var tab = arrayOfTabs[0];
-          chrome.tabs.sendMessage(tab.id, {message: "sendEmailsToBackend"});
-        });
-    }
-
-
-    else if(message.message === "doNotSendEmails"){
-      console.log("should not send email");
-      sendingEmails = false;
-      chrome.tabs.query({active:true}, function(arrayOfTabs){
-        var tab = arrayOfTabs[0];
-        chrome.tabs.sendMessage(tab.id, {message: "doNotSendEmailsToBackend"})
-      });
-    }
-
-
-    else if(message.message === "emailContent"){
-        console.log("Email content ", message.emailContent);
-        emails.push(message.emailContent);
-        console.log(emails);
-    }
-
-
-    else if(message.message === "getEmails"){
-        console.log(emails);
-        chrome.runtime.sendMessage({message:"updatedEmails", emails: emails})
+      EmailFactory.createNewEmail(emailToSave);
     }
 
     else if(message.message === "extensionStatus"){
@@ -152,31 +37,74 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
     }
 
     else if(message.message === "getCurrentStatus"){
+      sendMessageFromTab({message: "currentStatus", currentStatus: sendingEmails})
+    }
+
+    else if(message.message==="addHighlights")
+    {
+      var beforeContent = message.unhighlighted;
+      var afterContent = ContentFactory.transformPeopleNames(beforeContent, $scope.allNames, ContentFactory.highlightName);
+      sendMessageFromTab({message: "highlightedDraft", highlightedDraft: afterContent});
+    }
+
+    function sendMessageFromTab(messageObj){
       chrome.tabs.query({active:true}, function(arrayOfTabs){
         var tab = arrayOfTabs[0];
-        chrome.tabs.sendMessage(tab.id, {message: "currentStatus", currentStatus: sendingEmails})
+        chrome.tabs.sendMessage(tab.id, messageObj);
       });
     }
+
   });
 });
 
 bgApp.factory("EmailFactory", function($http){
-  factory = {};
-  factory.getAll = function (){
-    return $http.get("https://shielded-forest-2803.herokuapp.com/api/emails").then(function(response){
-      return response.data;
-    })
+  return {
+    getAll: function (){
+      return $http.get("https://shielded-forest-2803.herokuapp.com/api/emails").then(function(response){
+        return response.data;
+      });
+    },
+    createNewEmail: function (newEmail){
+      return $http.post("https://shielded-forest-2803.herokuapp.com/api/emails", newEmail).then(function(response){
+        return response.data;
+      });
+    }
   }
+});
 
-  factory.createNewEmail = function (newEmail){
-    return $http.post("https://shielded-forest-2803.herokuapp.com/api/emails", newEmail).then(function(response){
-      return response.data;
-    })
+bgApp.factory("ContentFactory", function(){
+
+  return {
+    transformPeopleNames: function(beforeContent, allNames, transform){
+      var draft = beforeContent;
+      var regex = /[A-Z]\w*/g, result, capitalizedWords= [];
+      while ( (result = regex.exec(draft)) ) {
+          capitalizedWords.push({word: result[0], index: result.index});
+      }
+      capitalizedWords = capitalizedWords.map(function(capitalizedWord){
+        var nameArray = allNames[capitalizedWord.word[0]];
+        capitalizedWord.oldWord = capitalizedWord.word;
+        if(nameArray.indexOf(capitalizedWord.word)>-1){
+          capitalizedWord.word = transform(capitalizedWord.word);
+        }
+        return capitalizedWord;
+      });
+
+      for (var i = capitalizedWords.length -1; i>=0; i--)
+      {
+        var capitalizedWord = capitalizedWords[i];
+        var firstPart = draft.slice(0, capitalizedWord.index);
+        var secondPart = draft.slice(capitalizedWord.index + capitalizedWord.oldWord.length);
+        draft = firstPart + capitalizedWord.word + secondPart;
+      }
+
+      return draft;
+    },
+    highlightName: function(name) {
+      return "<span style='background-color:limegreen;'>" + name + "</span>";
+    },
+    anonymizeName: function(name) {
+      return name[0];
+    }
   }
-  return factory;
-})
-
-var emails = [];
-chrome.runtime.onMessage.addListener(function(message, sender){
-
 });
