@@ -2,19 +2,23 @@ var gmail;
 
 function refresh(f) {
   if( typeof Gmail === "undefined") {
-    console.log("Gmail undefined");
     setTimeout('refresh(' + f + ')', 10);
   } else {
     f();
   }
 }
 
-var currentContent = null;
-
 var main = function(){
   var collectEmails = false;
   var showingHighlights = false;
   gmail = new Gmail();
+
+  var getCurrentStatus = new Event("getCurrentStatus");
+  document.dispatchEvent(getCurrentStatus);
+
+  document.addEventListener('currentStatus', function(e){
+    collectEmails = e.detail;
+  });
 
   document.addEventListener('collectEmails', function(){
     collectEmails = true;
@@ -31,22 +35,10 @@ var main = function(){
     document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = highlightedHTML;
   })
 
-  document.addEventListener('currentStatus', function(e){
-    collectEmails = e.detail;
-  })
 
   gmail.observe.on('compose', function(){
 
-   var status = new Event("getCurrentStatus");
-   document.dispatchEvent(status);
    var compose_ref = gmail.dom.composes()[0];
-   var src = ""
-  //  if(collectEmails){
-  //    src = "http://i.imgur.com/Zom1i7L.png";
-  //  }
-  //  else{
-  //    src = "https://pbs.twimg.com/media/CP_yOkfUkAM4m-w.png";
-  //  }
 
    gmail.tools.add_compose_button(compose_ref, '<div id="toggleDiv"><img id = "toggle" src="https://pbs.twimg.com/media/CQCcuqdUsAENToa.png"></img></div>', function() {
        var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
@@ -67,7 +59,7 @@ var main = function(){
          document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML = contentHTML;
        }
 
-     }, 'mdl-button mdl-js-button mdl-button--accent normal-wemail-button');
+     }, 'mdl-button mdl-js-button mdl-button--accent');
      if(collectEmails){
        $('#toggleDiv').css('display', 'inline');
      }
