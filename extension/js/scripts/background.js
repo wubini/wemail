@@ -2,16 +2,13 @@ var bgApp = angular.module("BackgroundApp", [])
 
 var sendingEmails = false;
 
-
 bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, $http){
   $http.get('https://shielded-forest-2803.herokuapp.com/api/names')
   .then(function(response) {
     $scope.allNames = response.data;
-    console.log($scope.allNames.A);
-})
+  })
 
-
-chrome.runtime.onMessage.addListener(function(message){
+  chrome.runtime.onMessage.addListener(function(message){
     if(message.message==="addHighlights")
     {
       var draft = message.unhighlighted;
@@ -45,7 +42,6 @@ chrome.runtime.onMessage.addListener(function(message){
         chrome.tabs.sendMessage(tab.id, {message: "highlightedDraft", highlightedDraft: draft})
       });
     }
-
 
     if(message.message==="createEmail")
     {

@@ -17,7 +17,7 @@
    "browser_action": {
      "default_icon": "assets/logo.png",
      "default_popup": "/extension.html",
-     "default_title": "Kathy"
+     "default_title": "WeMail"
    },
    "content_scripts": [{
       "js": ["/js/dependencies/jquery-1.11.3.min.js", "/js/scripts/content.js"],
@@ -31,6 +31,5 @@
     "/js/scripts/custom.js",
     "/js/dependencies/gmail.js",
     "js/dependencies/jquery-1.11.3.min.js"
-
   ]
 }
