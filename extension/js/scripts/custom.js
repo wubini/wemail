@@ -44,7 +44,7 @@ var main = function(){
        showingHighlights = !showingHighlights;
        if(showingHighlights) {
          $("#toggle").removeAttr('src');
-         $("#toggle").attr("src", "https://pbs.twimg.com/media/CQCbh3bUEAAZajd.png");
+         $("#toggle").attr("src", "https://pbs.twimg.com/media/CQEx7P_WcAAbfLS.png");
          $('#toggle').css('background-color','black');
          var addHighlights = new CustomEvent('addHighlights', {detail: contentHTML});
          document.dispatchEvent(addHighlights);
