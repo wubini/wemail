@@ -51,7 +51,7 @@ var main = function(){
        }
        else {
          $("#toggle").removeAttr('src');
-         $("#toggle").attr("src", "https://pbs.twimg.com/media/CQCcuqdUsAENToa.png");
+         $("#toggle").attr("src", "https://pbs.twimg.com/media/CQE9s6GUEAAWaEJ.png");
          $('#toggle').css('background-color','skyblue');
          contentHTML = contentHTML.replace(/\<span[^\>]*\>/g,"")
             .replace(/\<\/span[^\>]*\>/g,"");
