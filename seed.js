@@ -25,7 +25,7 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Email = Promise.promisifyAll(mongoose.model("Email"));
 var faker = require('faker');
 
-var numEmails = 100;
+var numEmails = 5000;
 
 var seedUsers = function () {
     var users = [
@@ -59,6 +59,7 @@ var findWords = function(content){
 
 var seedEmails = function() {
   var emails = [];
+  var randomTags = ['chocolate', 'cake','love', 'school', 'work', 'mom', 'cold', 'pizza'];
   for(var i = 0; i < numEmails; i++){
     var email = {
       content: null,
@@ -73,15 +74,20 @@ var seedEmails = function() {
     email.content = faker.lorem.paragraphs();
     email.subject = faker.lorem.sentence();
     var numOfTags = faker.random.number() % 100;
-    for(var j = 0; j < numOfTags; j++){
-      var tag = faker.hacker.noun();
-      email.tags.push(tag);
-    }
+    // for(var j = 0; j < numOfTags; j++){
+      //var tag = faker.hacker.noun();
+      randomTags.forEach(function(tag) {
+        if(Math.random()>0.2)
+        {
+          email.tags.push(tag);
+        }
+      })
+    // }
     var location = {
       latitude: faker.address.latitude(),
       longitude: faker.address.longitude()
     };
-    email.timestamp = faker.date.past();
+    email.timestamp = Date(2014, Math.floor(Math.random()*13), Math.floor(Math.random()*31));
     email.length = findLength(email.content);
     var genderSetter = faker.random.number();
     if(genderSetter > 1000) email.gender = "M";
