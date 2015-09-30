@@ -39,7 +39,7 @@ var main = function(){
 
    var compose_ref = gmail.dom.composes()[0];
 
-   gmail.tools.add_compose_button(compose_ref, '<div id="toggleDiv"><img id = "toggle" src="https://pbs.twimg.com/media/CQCcuqdUsAENToa.png"></img></div>', function() {
+   gmail.tools.add_compose_button(compose_ref, '<div id="toggleDiv"><img id = "toggle" src="https://pbs.twimg.com/media/CQE9s6GUEAAWaEJ.png"></img></div>', function() {
        var contentHTML = document.getElementsByClassName("Am Al editable LW-avf")[0].innerHTML;
        showingHighlights = !showingHighlights;
        if(showingHighlights) {
