@@ -25,7 +25,9 @@
       "matches": ["*://mail.google.com/*"]
    }],
   "icons": {
-      "128": "assets/logo.png"
+      "16": "assets/logo16.png",
+      "48": "assets/logo48.png",
+      "128": "assets/logo128.png"
     },
   "web_accessible_resources": [
     "/js/scripts/custom.js",
