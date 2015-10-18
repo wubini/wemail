@@ -13,7 +13,8 @@ var schema =  new mongoose.Schema({
       longitude: Number
     },
     timestamp: {
-      type: Date
+      type: Date,
+      default: Date.now
     },
     length: {
       type: Number
