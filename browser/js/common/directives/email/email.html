@@ -1,10 +1,8 @@
-<div class="col-lg-4 mdl-card">
-  <div class = "mdl-card_title">
-      <h4 class = "mdl-card_title-text">Subject: {{email.subject}}</h2>
+<div class="col-lg-12 mdl-shadow--2dp">
+  <div>
+      <h5><strong>Subject:</strong> {{email.subject}}</h5>
   </div>
-  <div class="mdl-card__supporting-text">
-      <p><strong>Content</strong>: {{email.content}}</p>
-      <hr>
-      <p>{{email.timestamp | date}}</p>
+  <p><strong>Date:</strong> {{email.timestamp | date}}</p>
+  <p><strong>Content</strong>: {{email.content}}</p>
   </div>
 </div>

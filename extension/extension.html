@@ -27,16 +27,19 @@
 				<div class="android-content mdl-layout__content" ui-view>
 					<a name="top"></a>
 					<div class="android-be-together-section mdl-typography--text-center">
-						<div class="android-font android-slogan">welcome to WeMail</div>
-						<div class="android-font android-sub-slogan">read and share emails with the world</div>
-						<button class="mdl-button mdl-js-button mdl-button--accent md-48 spaceButton" ng-if = "activated" ng-click = "deactivate()">
-							<h4 style = "color:red">Turn Off</h4>
-							<i class="material-icons md-48 red">power_settings_new</i>
-						</button>
-						<button class="mdl-button mdl-js-button mdl-button--accent spaceButton" ng-if = "!activated" ng-click = "activate()">
-							<h4>Turn On</h4>
-							<i class="material-icons md-48">power_settings_new</i>
-						</button>
+						<div class="android-font android-slogan">WeMail</div>
+						<div class="android-font android-sub-slogan">Read everyone's emails and let them read yours</div>
+						<div>
+							<br>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--warn" ng-if = "activated" ng-click = "deactivate()">
+								Stop Sharing
+								<i class="material-icons md-27">power_settings_new</i>
+							</button>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if = "!activated" ng-click = "activate()">
+								Share Emails
+								<i class="material-icons md-27">power_settings_new</i>
+							</button>
+						</div>
 					</div>
 				</div>
 	    </main>
