@@ -3,7 +3,7 @@ var bgApp = angular.module("BackgroundApp", [])
 var sendingEmails = false;
 
 bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, ContentFactory, $http){
-  $http.get('https://shielded-forest-2803.herokuapp.com/api/names')
+  $http.get('https://we-mail.herokuapp.com/api/names')
   .then(function(response) {
     $scope.allNames = response.data;
   })
@@ -60,12 +60,12 @@ bgApp.controller("BackgroundCtrl", function($scope, EmailFactory, ContentFactory
 bgApp.factory("EmailFactory", function($http){
   return {
     getAll: function (){
-      return $http.get("https://shielded-forest-2803.herokuapp.com/api/emails").then(function(response){
+      return $http.get("https://we-mail.herokuapp.com/api/emails").then(function(response){
         return response.data;
       });
     },
     createNewEmail: function (newEmail){
-      return $http.post("https://shielded-forest-2803.herokuapp.com/api/emails", newEmail).then(function(response){
+      return $http.post("https://we-mail.herokuapp.com/api/emails", newEmail).then(function(response){
         return response.data;
       });
     }
