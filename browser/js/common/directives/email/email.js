@@ -5,4 +5,5 @@ app.directive("email", function(){
     scope: {
       email: '='
     }
-})
+  }
+});
