@@ -31,14 +31,20 @@
 						<div class="android-font android-sub-slogan">Read everyone's emails and let them read yours</div>
 						<div>
 							<br>
-							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--warn" ng-if = "activated" ng-click = "deactivate()">
-								Stop Sharing
-								<i class="material-icons md-27">power_settings_new</i>
-							</button>
-							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if = "!activated" ng-click = "activate()">
-								Share Emails
-								<i class="material-icons md-27">power_settings_new</i>
-							</button>
+							<div ng-if = "activated">
+								<p>Sharing is turned on (but you still have a chance to confirm for each email).
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--warn" ng-click = "deactivate()">
+									Stop Sharing
+									<i class="material-icons md-27">power_settings_new</i>
+								</button>
+							</div>
+							<div ng-if = "!activated">
+								<p>Sharing is turned off, it's as if you didn't have WeMail installed at all.</p>
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click = "activate()">
+									Share Emails
+									<i class="material-icons md-27">power_settings_new</i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
